@@ -78,7 +78,7 @@
             font-size: 0.95rem;
         }
 
-        /* Controls / Tabs */
+        /* Nav Tabs */
         .nav-tabs {
             display: flex;
             background: rgba(15, 23, 42, 0.6);
@@ -385,7 +385,7 @@
         </div>
 
         <footer>
-            <p>Le Proverbe du Jour &bull; Application Web</p>
+            <p>Le Proverbe du Jour &bull; 100 Proverbes en Stock</p>
         </footer>
     </div>
 
@@ -394,23 +394,103 @@
             { id: 1, text: "L'habit ne fait pas le moine.", exp: "Il ne faut pas juger une personne sur son apparence extérieure.", theme: "Apparence" },
             { id: 2, text: "Qui va lentement arrive sûrement.", exp: "Prendre son temps garantit de mieux réussir ses entreprises.", theme: "Patience" },
             { id: 3, text: "Après la pluie, le beau temps.", exp: "Les difficultés finissent toujours par laisser place à des jours meilleurs.", theme: "Espoir" },
-            { id: 4, text: "Pierre qui roule n'amasse pas mousse.", exp: "Changer trop souvent d'occupation ne permet pas d'accumuler des biens ou de l'expérience.", theme: "Constance" },
+            { id: 4, text: "Pierre qui roule n'amasse pas mousse.", exp: "Changer trop souvent d'occupation ne permet pas de construire quelque chose de durable.", theme: "Constance" },
             { id: 5, text: "Chassez le naturel, il revient au galop.", exp: "On ne peut pas masquer sa vraie nature bien longtemps.", theme: "Vérité" },
             { id: 6, text: "Rien ne sert de courir, il faut partir à point.", exp: "La précipitation est inutile, la préparation et la régularité comptent davantage.", theme: "Prudence" },
-            { id: 7, text: "Petit à petit, l'oiseau fait son nid.", exp: "C'est avec de la persévérance et de la patience que l'on accomplit de grandes choses.", theme: "Persévérance" },
-            { id: 8, text: "Quand le chat n'est pas là, les souris dansent.", exp: "En l'absence de maître ou d'autorité, chacun profite pour agir à sa guise.", theme: "Liberté" },
+            { id: 7, text: "Petit à petit, l'oiseau fait son nid.", exp: "C'est avec de la persévérance que l'on accomplit de grandes choses.", theme: "Persévérance" },
+            { id: 8, text: "Quand le chat n'est pas là, les souris dansent.", exp: "En l'absence d'autorité, chacun profite pour agir à sa guise.", theme: "Liberté" },
             { id: 9, text: "Vouloir, c'est pouvoir.", exp: "La volonté permet de surmonter la plupart des obstacles.", theme: "Volonté" },
-            { id: 10, text: "Aux âmes bien nées, la valeur n'attend point le nombre des années.", exp: "Le talent et la valeur personnelle n'attendent pas l'âge adulte.", theme: "Maturité" },
-            { id: 11, text: "Goutte à goutte, l'eau creuse la pierre.", exp: "Avec de la patience et de la régularité, on surmonte de très grands obstacles.", theme: "Patience" },
+            { id: 10, text: "Aux âmes bien nées, la valeur n'attend point le nombre des années.", exp: "Le talent et la valeur personnelle ne dépendent pas de l'âge.", theme: "Maturité" },
+            { id: 11, text: "Goutte à goutte, l'eau creuse la pierre.", exp: "Avec de la patience et de la régularité, on vient à bout des plus grands obstacles.", theme: "Patience" },
             { id: 12, text: "Les paroles s'envolent, les écrits restent.", exp: "Un engagement écrit a une valeur durable par rapport à une promesse orale.", theme: "Prudence" },
-            { id: 13, text: "On ne prête qu'aux riches.", exp: "On accorde plus facilement sa confiance ou ses faveurs à ceux qui ont déjà du succès.", theme: "Société" },
+            { id: 13, text: "On ne prête qu'aux riches.", exp: "On accorde plus facilement des faveurs à ceux qui ont déjà du succès.", theme: "Société" },
             { id: 14, text: "Il n'y a pas de fumée sans feu.", exp: "Toute rumeur a souvent une part de vérité à son origine.", theme: "Vérité" },
             { id: 15, text: "À cœur vaillant rien d'impossible.", exp: "Avec du courage, on peut réussir n'importe quel défi.", theme: "Courage" },
             { id: 16, text: "Autant en emporte le vent.", exp: "Se dit des promesses ou des paroles qui sont rapidement oubliées.", theme: "Réalité" },
             { id: 17, text: "Qui sème le vent récolte la tempête.", exp: "Provoquer des désordres finit par se retourner violemment contre soi.", theme: "Justice" },
-            { id: 18, text: "L'erreur est humaine, persévérer est diabolique.", exp: "Tout le monde peut se tromper, mais refuser de corriger ses fautes est impardonnable.", theme: "Sagesse" },
+            { id: 18, text: "L'erreur est humaine, persévérer est diabolique.", exp: "Tout le monde peut se tromper, mais refuser de corriger ses fautes est grave.", theme: "Sagesse" },
             { id: 19, text: "Mieux vaut tard que jamais.", exp: "Il vaut mieux accomplir une action tardivement que de ne jamais la faire.", theme: "Temps" },
-            { id: 20, text: "L'union fait la force.", exp: "En rassemblant nos efforts, nous sommes bien plus puissants que seuls.", theme: "Entraide" }
+            { id: 20, text: "L'union fait la force.", exp: "En rassemblant nos efforts, nous sommes bien plus puissants que seuls.", theme: "Entraide" },
+            { id: 21, text: "Comme on fait son lit, on se couche.", exp: "On doit assumer les conséquences de ses propres actes.", theme: "Responsabilité" },
+            { id: 22, text: "Il faut battre le fer tant qu'il est chaud.", exp: "Il faut saisir les opportunités dès qu'elles se présentent.", theme: "Opportunité" },
+            { id: 23, text: "Tout vient à point à qui sait attendre.", exp: "Avec de la patience, on finit toujours par obtenir ce que l'on désire.", theme: "Patience" },
+            { id: 24, text: "Les murs ont des oreilles.", exp: "Il faut faire attention à ce que l'on dit, car on peut être écouté discrètement.", theme: "Prudence" },
+            { id: 25, text: "Prudence est mère de sûreté.", exp: "En faisant attention, on évite bien des désagréments.", theme: "Prudence" },
+            { id: 26, text: "On ne fait pas d'omelette sans casser des œufs.", exp: "Pour obtenir des résultats, il faut accepter de faire des sacrifices.", theme: "Effort" },
+            { id: 27, text: "Tant va la cruche à l'eau qu'à la fin elle se casse.", exp: "À force de prendre des risques répétition, on finit par subir un accident.", theme: "Mise en garde" },
+            { id: 28, text: "La nuit porte conseil.", exp: "Prendre du recul et dormir permet de prendre de meilleures décisions.", theme: "Réflexion" },
+            { id: 29, text: "Mieux vaut prévenir que guérir.", exp: "Il est préférable d'anticiper les problèmes plutôt que d'avoir à les résoudre.", theme: "Prudence" },
+            { id: 30, text: "Il ne faut pas vendre la peau de l'ours avant de l'avoir tué.", exp: "Il ne faut pas considérer une chose comme acquise avant de l'avoir réellement obtenue.", theme: "Sagesse" },
+            { id: 31, text: "Qui cherche trouve.", exp: "Avec des efforts et de la détermination, on finit par obtenir des réponses.", theme: "Effort" },
+            { id: 32, text: "Il vaut mieux être seul que mal accompagné.", exp: "La solitude est préférable à la compagnie de personnes toxiques.", theme: "Relations" },
+            { id: 33, text: "Les grands esprits se rencontrent.", exp: "Se dit quand deux personnes ont la même idée au même moment.", theme: "Complicité" },
+            { id: 34, text: "Chat échaudé craint l'eau froide.", exp: "Quand on a souffert d'une expérience, on devient très méfiant.", theme: "Expérience" },
+            { id: 35, text: "C'est en forgeant qu'on devient forgeron.", exp: "La pratique régulière est le seul moyen de maîtriser un savoir-faire.", theme: "Apprentissage" },
+            { id: 36, text: "Abondance de biens ne nuit pas.", exp: "Avoir plus que nécessaire n'est pas un problème, cela peut servir.", theme: "Prévoyance" },
+            { id: 37, text: "L'argent ne fait pas le bonheur.", exp: "La richesse matérielle ne suffit pas à garantir l'épanouissement personnel.", theme: "Valeurs" },
+            { id: 38, text: "L'argent est un bon serviteur mais un mauvais maître.", exp: "L'argent doit aider à vivre, mais ne doit pas diriger toutes nos décisions.", theme: "Sagesse" },
+            { id: 39, text: "À chaque jour suffit sa peine.", exp: "Il ne sert à rien de s'inquiéter à l'avance pour les soucis de demain.", theme: "Sérénité" },
+            { id: 40, text: "Ce qui ne tue pas rend plus fort.", exp: "Les épreuves surmontées nous renforcent mentalement.", theme: "Résilience" },
+            { id: 41, text: "Avisé comme un singe, prudent comme un serpent.", exp: "Associer l'intelligence à la prudence permet de déjouer les pièges.", theme: "Intelligence" },
+            { id: 42, text: "Bien mal acquis ne profite jamais.", exp: "Ce qui est obtenu par la tromperie ne porte pas bonheur.", theme: "Honnêteté" },
+            { id: 43, text: "Chaque chose en son temps.", exp: "Il faut respecter l'ordre naturel et ne pas précipiter les événements.", theme: "Patience" },
+            { id: 44, text: "Des goûts et des couleurs, on ne discute pas.", exp: "Chacun a des préférences personnelles qu'il faut respecter.", theme: "Tolérance" },
+            { id: 45, text: "Il n'est pire sourd que celui qui ne veut pas entendre.", exp: "Il est impossible de convaincre quelqu'un qui refuse d'écouter.", theme: "Communication" },
+            { id: 46, text: "Qui trop embrasse mal étreint.", exp: "Vouloir mener trop de projets à la fois empêche de les réussir.", theme: "Focus" },
+            { id: 47, text: "Il faut tourner sept fois sa langue dans sa bouche avant de parler.", exp: "Il convient de bien réfléchir avant d'exprimer une pensée.", theme: "Prudence" },
+            { id: 48, text: "L'appétit vient en mangeant.", exp: "L'intérêt ou le désir pour une chose grandit au fur et à mesure qu'on la pratique.", theme: "Motivation" },
+            { id: 49, text: "Nul n'est prophète en son pays.", exp: "On est souvent moins reconnu par ses proches que par des inconnus.", theme: "Reconnaissance" },
+            { id: 50, text: "Qui paie ses dettes s'enrichit.", exp: "Se libérer de ses engagements financiers donne la vraie tranquillité d'esprit.", theme: "Gestion" },
+            { id: 51, text: "Quand on veut tuer son chien, on dit qu'il a la rage.", exp: "On trouve toujours des prétextes malhonnêtes pour nuire à quelqu'un.", theme: "Justice" },
+            { id: 52, text: "Un homme averti en vaut deux.", exp: "Être informé d'un danger permet de mieux s'y préparer.", theme: "Anticipation" },
+            { id: 53, text: "Les petits ruisseaux font les grandes rivières.", exp: "Les petites économies ou petits efforts finissent par accumuler de grands résultats.", theme: "Économie" },
+            { id: 54, text: "Oeil pour oeil, dent pour dent.", exp: "Loi de la vengeance exigeant une punition égale au tort subi.", theme: "Justice" },
+            { id: 55, text: "Qui aime bien châtie bien.", exp: "Être exigeant envers quelqu'un est parfois une preuve d'affection.", theme: "Éducation" },
+            { id: 56, text: "Il ne faut pas mettre tous ses œufs dans le même panier.", exp: "Il faut diversifier ses risques pour ne pas tout perdre d'un coup.", theme: "Prudence" },
+            { id: 57, text: "Toutes les routes mènent à Rome.", exp: "Il existe plusieurs moyens différents pour parvenir au même résultat.", theme: "Flexibilité" },
+            { id: 58, text: "On reconnaît l'arbre à ses fruits.", exp: "C'est par ses actes concrets qu'on évalue la valeur d'une personne.", theme: "Action" },
+            { id: 59, text: "Chacun voit midi à sa porte.", exp: "Chacun juge une situation selon son propre point de vue ou intérêt.", theme: "Perspective" },
+            { id: 60, text: "Chose promise, chose due.", exp: "Il faut toujours honorer les engagements qu'on a pris.", theme: "Honnêteté" },
+            { id: 61, text: "Il faut rendre à César ce qui est à César.", exp: "Il faut attribuer à chacun le mérite ou le bien qui lui revient.", theme: "Justice" },
+            { id: 62, text: "Le temps, c'est de l'argent.", exp: "Le temps est une ressource précieuse qu'il ne faut pas gaspiller.", theme: "Temps" },
+            { id: 63, text: "Les absents ont toujours tort.", exp: "Ceux qui ne sont pas présents pour se défendre sont facilement accusés.", theme: "Présence" },
+            { id: 64, text: "La vérité sort de la bouche des enfants.", exp: "Les enfants s'expriment sans filtre ni calcul.", theme: "Sincérité" },
+            { id: 65, text: "L'exception confirme la règle.", exp: "La présence d'un cas particulier montre qu'il existe bien une règle générale.", theme: "Logique" },
+            { id: 66, text: "L'espoir fait vivre.", exp: "Garder espoir permet de surmonter les moments pénibles.", theme: "Espoir" },
+            { id: 67, text: "Quand le vin est tiré, il faut le boire.", exp: "Quand une affaire est engagée, il faut aller jusqu'au bout.", theme: "Engagement" },
+            { id: 68, text: "Si jeunesse savait, si vieillesse pouvait.", exp: "Les jeunes manquent d'expérience et les anciens manquent de force physique.", theme: "Vie" },
+            { id: 69, text: "Tout ce qui brille n'est pas or.", exp: "Les apparences séduisantes peuvent cacher des réalités décevantes.", theme: "Discernement" },
+            { id: 70, text: "Ventre affamé n'a pas d'oreilles.", exp: "Une personne dans le besoin écoute difficilement les longs discours.", theme: "Besoin" },
+            { id: 71, text: "Nul n'est censé ignorer la loi.", exp: "Chacun doit connaître ses devoirs et les règles de la société.", theme: "Droit" },
+            { id: 72, text: "C'est la goutte d'eau qui fait border le vase.", exp: "Un petit détail supplémentaire peut déclencher une grande colère.", theme: "Limites" },
+            { id: 73, text: "Il vaut mieux faire envie que pitié.", exp: "Il est préférable d'avoir du succès, quitte à susciter la jalousie.", theme: "Réussite" },
+            { id: 74, text: "Qui ne dit mot consent.", exp: "Garder le silence face à une affirmation équivaut à un accord.", theme: "Communication" },
+            { id: 75, text: "Le soleil luit pour tout le monde.", exp: "Certaines ressources fondamentales appartiennent à toute l'humanité.", theme: "Égalité" },
+            { id: 76, text: "À bon vin point d'enseigne.", exp: "Ce qui est d'excellente qualité n'a pas besoin de grande publicité.", theme: "Qualité" },
+            { id: 77, text: "Autre temps, autres mœurs.", exp: "Les coutumes et valeurs évoluent au fil des générations.", theme: "Évolution" },
+            { id: 78, text: "Bon sang ne saurait mentir.", exp: "On retrouve souvent les qualités ou défauts de ses parents.", theme: "Hérédité" },
+            { id: 79, text: "Du choc des idées jaillit la lumière.", exp: "La confrontation de points de vue enrichit la réflexion.", theme: "Debat" },
+            { id: 80, text: "Il n'y a que le premier pas qui coûte.", exp: "Le plus difficile dans une entreprise est de commencer.", theme: "Courage" },
+            { id: 81, text: "La fin justifie les moyens.", exp: "Pour certains, atteindre un objectif important excuse les méthodes employées.", theme: "Morale" },
+            { id: 82, text: "L'oisiveté est la mère de tous les vices.", exp: "Ne rien faire pousse à adopter de mauvais comportements.", theme: "Travail" },
+            { id: 83, text: "Nul ne peut servir deux maîtres à la fois.", exp: "On ne peut pas être loyal envers deux causes opposées.", theme: "Loyauté" },
+            { id: 84, text: "Paris ne s'est pas fait en un jour.", exp: "Les grandes réalisations demandent de la patience et du temps.", theme: "Patience" },
+            { id: 85, text: "Qui veut voyager loin ménage sa monture.", exp: "Il faut gérer ses forces si l'on veut tenir sur la durée.", theme: "Endurance" },
+            { id: 86, text: "Tout vient à point à qui sait attendre.", exp: "La patience est toujours récompensée.", theme: "Patience" },
+            { id: 87, text: "Une hirondelle ne fait pas le printemps.", exp: "Un seul indice favorable ne suffit pas à confirmer une tendance.", theme: "Prudence" },
+            { id: 88, text: "Vouloir ignorer, c'est déjà savoir.", exp: "Refuser de voir une vérité montre qu'on en a déjà conscience.", theme: "Conscience" },
+            { id: 89, text: "Ce qui est fait n'est plus à faire.", exp: "Se débarrasser d'une tâche apporte immédiatement du soulagement.", theme: "Organisation" },
+            { id: 90, text: "L'amour est aveugle.", exp: "Les sentiments intenses empêchent de voir les défauts de l'autre.", theme: "Sentiment" },
+            { id: 91, text: "La vengeance est un plat qui se mange froid.", exp: "Répondre à une offense demande du calme et du temps.", theme: "Maîtrise" },
+            { id: 92, text: "Mieux vaut plier que rompre.", exp: "Savoir s'adapter permet de survivre aux crises.", theme: "Flexibilité" },
+            { id: 93, text: "Un clou chasse l'autre.", exp: "Une nouvelle préoccupation fait oublier la précédente.", theme: "Changement" },
+            { id: 94, text: "À l'impossible nul n'est tenu.", exp: "On ne peut pas exiger de quelqu'un ce qui dépasse ses capacités.", theme: "Indulgence" },
+            { id: 95, text: "Bien faire et laisser dire.", exp: "L'important est d'agir avec honnêteté sans se soucier des critiques.", theme: "Incorruptible" },
+            { id: 96, text: "Il faut de tout pour faire un monde.", exp: "La diversité des personnalités est naturelle dans la société.", theme: "Tolérance" },
+            { id: 97, text: "Le mieux est l'ennemi du bien.", exp: "À vouloir trop perfectionner une chose, on risque de la gâcher.", theme: "Modération" },
+            { id: 98, text: "Nul n'est parfait.", exp: "Tout le monde comporte son lot de faiblesses.", theme: "Humilité" },
+            { id: 99, text: "Quand on parle du loup, on en voit la queue.", exp: "Se dit quand la personne dont on parlait arrive à l'instant.", theme: "Coïncidence" },
+            { id: 100, text: "Rira bien qui rira le dernier.", exp: "Le véritable succès se mesure à la fin d'une situation.", theme: "Persévérance" }
         ];
 
         let currentProverb = null;
@@ -498,73 +578,4 @@
 
             if (tabName === 'today') {
                 document.querySelectorAll('.tab-btn')[0].classList.add('active');
-                document.getElementById('view-today').classList.add('active');
-            } else if (tabName === 'explore') {
-                document.querySelectorAll('.tab-btn')[1].classList.add('active');
-                document.getElementById('view-explore').classList.add('active');
-                renderExplore();
-            } else if (tabName === 'favorites') {
-                document.querySelectorAll('.tab-btn')[2].classList.add('active');
-                document.getElementById('view-favorites').classList.add('active');
-                renderFavorites();
-            }
-        }
-
-        function renderExplore(items = proverbs) {
-            const container = document.getElementById('explore-list');
-            container.innerHTML = '';
-            items.forEach(p => {
-                const div = document.createElement('div');
-                div.className = 'list-item';
-                div.onclick = () => {
-                    displayToday(p);
-                    switchTab('today');
-                };
-                div.innerHTML = `
-                    <div style="display:flex; justify-content:space-between;">
-                        <span class="theme-tag" style="font-size:0.7rem; padding:3px 8px;">${p.theme}</span>
-                    </div>
-                    <div class="list-item-title">« ${p.text} »</div>
-                    <div class="list-item-desc">${p.exp}</div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function filterProverbs() {
-            const query = document.getElementById('search-input').value.toLowerCase();
-            const filtered = proverbs.filter(p => p.text.toLowerCase().includes(query) || p.exp.toLowerCase().includes(query) || p.theme.toLowerCase().includes(query));
-            renderExplore(filtered);
-        }
-
-        function renderFavorites() {
-            const container = document.getElementById('favorites-list');
-            container.innerHTML = '';
-            const favItems = proverbs.filter(p => favorites.includes(p.id));
-
-            if (favItems.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:var(--text-muted); padding:30px;">Aucun favori pour le moment. Cliquez sur le cœur pour en ajouter !</p>';
-                return;
-            }
-
-            favItems.forEach(p => {
-                const div = document.createElement('div');
-                div.className = 'list-item';
-                div.onclick = () => {
-                    displayToday(p);
-                    switchTab('today');
-                };
-                div.innerHTML = `
-                    <div class="list-item-title">« ${p.text} »</div>
-                    <div class="list-item-desc">${p.exp}</div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        // Initialisation
-        displayToday(getProverbOfDay());
-        lucide.createIcons();
-    </script>
-</body>
-</html>
+                document.getElementById('view-today').classList.add('
