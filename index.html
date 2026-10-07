@@ -4,438 +4,274 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Proverbe du Jour</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: rgba(23, 31, 51, 0.7);
-            --card-border: rgba(255, 215, 0, 0.15);
-            --primary: #fbbf24;
-            --primary-hover: #f59e0b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent: #818cf8;
-            --danger: #ef4444;
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent-gold: #f59e0b;
+            --text-light: #f8fafc;
+            --text-dim: #94a3b8;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            -webkit-tap-highlight-color: transparent;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 100% 100%, rgba(129, 140, 248, 0.05) 0%, transparent 50%);
-            color: var(--text-main);
+            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
+            color: var(--text-light);
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding: 20px 16px;
+            padding: 20px;
         }
 
-        .app-container {
+        .container {
             width: 100%;
-            max-width: 640px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            max-width: 500px;
         }
 
         header {
             text-align: center;
-            margin-top: 10px;
-            margin-bottom: 5px;
+            margin-bottom: 24px;
         }
 
-        header h1 {
+        h1 {
             font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #fff 30%, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 1px;
-            margin-bottom: 6px;
+            color: var(--accent-gold);
+            font-size: 2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        header p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* Nav Tabs */
-        .nav-tabs {
-            display: flex;
-            background: rgba(15, 23, 42, 0.6);
-            padding: 4px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            gap: 4px;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 10px 14px;
-            border: none;
-            background: transparent;
-            color: var(--text-muted);
+        .subtitle {
+            color: var(--text-dim);
             font-size: 0.9rem;
-            font-weight: 600;
-            border-radius: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.25s ease;
+            margin-top: 4px;
         }
 
-        .tab-btn.active {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--primary);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Main Card */
-        .proverb-card {
+        .card {
             background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 32px 24px;
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .proverb-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-        }
-
-        .card-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .theme-tag {
-            background: rgba(251, 191, 36, 0.1);
-            border: 1px solid rgba(251, 191, 36, 0.25);
-            color: var(--primary);
-            padding: 6px 14px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(245, 158, 11, 0.2);
             border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .date-display {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .proverb-content {
+            padding: 30px 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             text-align: center;
-            padding: 10px 0;
+            position: relative;
         }
 
-        .proverb-quote {
+        .date-badge {
+            display: inline-block;
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--accent-gold);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .proverb-text {
             font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
-            line-height: 1.45;
-            color: var(--text-main);
-            font-weight: 700;
-            margin-bottom: 16px;
+            font-size: 1.35rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #ffffff;
         }
 
-        .explanation-box {
-            background: rgba(15, 23, 42, 0.4);
-            border-left: 3px solid var(--primary);
-            padding: 16px;
-            border-radius: 0 12px 12px 0;
+        .explanation {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+            background: rgba(15, 23, 42, 0.5);
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 3px solid var(--accent-gold);
             text-align: left;
+            margin-bottom: 24px;
         }
 
-        .explanation-box h4 {
-            color: var(--primary);
+        .explanation strong {
+            color: var(--accent-gold);
+            display: block;
+            margin-bottom: 4px;
             font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 6px;
         }
 
-        .explanation-box p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        /* Action Buttons */
-        .card-actions {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+        .btn-group {
+            display: flex;
             gap: 10px;
-            margin-top: 10px;
-        }
-
-        .action-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-main);
-            padding: 12px 6px;
-            border-radius: 14px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            gap: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            transition: all 0.2s ease;
         }
 
-        .action-btn:hover {
-            background: rgba(255, 255, 255, 0.12);
-        }
-
-        .action-btn.active-fav {
-            color: var(--danger);
-            background: rgba(239, 68, 68, 0.15);
-            border-color: rgba(239, 68, 68, 0.3);
-        }
-
-        /* Search & Filter section */
-        .search-box {
-            position: relative;
-            margin-bottom: 15px;
-        }
-
-        .search-box input {
-            width: 100%;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid var(--card-border);
-            padding: 12px 16px 12px 42px;
-            border-radius: 14px;
-            color: var(--text-main);
-            font-size: 0.95rem;
-            outline: none;
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            width: 18px;
-            height: 18px;
-        }
-
-        .proverb-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-height: 450px;
-            overflow-y: auto;
-            padding-right: 4px;
-        }
-
-        .list-item {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 16px;
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            cursor: pointer;
-        }
-
-        .list-item-title {
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            color: var(--text-main);
-            font-size: 1rem;
-        }
-
-        .list-item-desc {
-            color: var(--text-muted);
+        button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
             font-size: 0.85rem;
-            line-height: 1.4;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .view-panel {
-            display: none;
-        }
-
-        .view-panel.active {
-            display: block;
+        button:hover {
+            background: var(--accent-gold);
+            color: #000;
         }
 
         footer {
-            margin-top: auto;
-            padding: 20px 0 10px 0;
             text-align: center;
-            color: var(--text-muted);
-            font-size: 0.8rem;
+            margin-top: 20px;
+            color: var(--text-dim);
+            font-size: 0.75rem;
         }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
+    <div class="container">
         <header>
             <h1>Le Proverbe du Jour</h1>
-            <p>Sagesse & Pensées au quotidien</p>
+            <p class="subtitle">Sagesse & Pensées au quotidien</p>
         </header>
 
-        <nav class="nav-tabs">
-            <button class="tab-btn active" onclick="switchTab('today')">
-                <i data-lucide="sparkles"></i> Aujourd'hui
-            </button>
-            <button class="tab-btn" onclick="switchTab('explore')">
-                <i data-lucide="compass"></i> Explorer
-            </button>
-            <button class="tab-btn" onclick="switchTab('favorites')">
-                <i data-lucide="bookmark"></i> Favoris
-            </button>
-        </nav>
-
-        <!-- Vue : Aujourd'hui -->
-        <div id="view-today" class="view-panel active">
-            <div class="proverb-card">
-                <div class="card-top">
-                    <span class="theme-tag" id="today-theme">Sagesse</span>
-                    <span class="date-display" id="today-date">--</span>
-                </div>
-
-                <div class="proverb-content">
-                    <div class="proverb-quote" id="today-quote">Chargement...</div>
-                    <div class="explanation-box">
-                        <h4>Explication</h4>
-                        <p id="today-explanation">...</p>
-                    </div>
-                </div>
-
-                <div class="card-actions">
-                    <button class="action-btn" onclick="speakCurrent()">
-                        <i data-lucide="volume-2"></i> Écouter
-                    </button>
-                    <button class="action-btn" id="fav-btn" onclick="toggleFavoriteCurrent()">
-                        <i data-lucide="heart"></i> Favori
-                    </button>
-                    <button class="action-btn" onclick="shareCurrent()">
-                        <i data-lucide="share-2"></i> Partager
-                    </button>
-                    <button class="action-btn" onclick="loadRandomProverb()">
-                        <i data-lucide="shuffle"></i> Un autre
-                    </button>
-                </div>
+        <div class="card">
+            <span class="date-badge" id="date">--</span>
+            <div class="proverb-text" id="proverb">Chargement...</div>
+            <div class="explanation">
+                <strong>Explication</strong>
+                <span id="explanation">...</span>
             </div>
-        </div>
 
-        <!-- Vue : Explorer -->
-        <div id="view-explore" class="view-panel">
-            <div class="search-box">
-                <i data-lucide="search"></i>
-                <input type="text" id="search-input" placeholder="Rechercher un proverbe..." oninput="filterProverbs()">
+            <div class="btn-group">
+                <button onclick="speakProverb()">🔊 Écouter</button>
+                <button onclick="shareProverb()">📲 Partager</button>
+                <button onclick="getRandomProverb()">🎲 Un autre</button>
             </div>
-            <div class="proverb-list" id="explore-list"></div>
-        </div>
-
-        <!-- Vue : Favoris -->
-        <div id="view-favorites" class="view-panel">
-            <div class="proverb-list" id="favorites-list"></div>
         </div>
 
         <footer>
-            <p>Le Proverbe du Jour &bull; 100 Proverbes en Stock</p>
+            Proverbe du Jour • 100 Proverbes en Stock
         </footer>
     </div>
 
     <script>
         const proverbs = [
-            { id: 1, text: "L'habit ne fait pas le moine.", exp: "Il ne faut pas juger une personne sur son apparence extérieure.", theme: "Apparence" },
-            { id: 2, text: "Qui va lentement arrive sûrement.", exp: "Prendre son temps garantit de mieux réussir ses entreprises.", theme: "Patience" },
-            { id: 3, text: "Après la pluie, le beau temps.", exp: "Les difficultés finissent toujours par laisser place à des jours meilleurs.", theme: "Espoir" },
-            { id: 4, text: "Pierre qui roule n'amasse pas mousse.", exp: "Changer trop souvent d'occupation ne permet pas de construire quelque chose de durable.", theme: "Constance" },
-            { id: 5, text: "Chassez le naturel, il revient au galop.", exp: "On ne peut pas masquer sa vraie nature bien longtemps.", theme: "Vérité" },
-            { id: 6, text: "Rien ne sert de courir, il faut partir à point.", exp: "La précipitation est inutile, la préparation compte davantage.", theme: "Prudence" },
-            { id: 7, text: "Petit à petit, l'oiseau fait son nid.", exp: "C'est avec de la persévérance que l'on accomplit de grandes choses.", theme: "Persévérance" },
-            { id: 8, text: "Quand le chat n'est pas là, les souris dansent.", exp: "En l'absence d'autorité, chacun profite pour agir à sa guise.", theme: "Liberté" },
-            { id: 9, text: "Vouloir, c'est pouvoir.", exp: "La volonté permet de surmonter la plupart des obstacles.", theme: "Volonté" },
-            { id: 10, text: "Aux âmes bien nées, la valeur n'attend point le nombre des années.", exp: "Le talent ne dépend pas de l'âge.", theme: "Maturité" },
-            { id: 11, text: "Goutte à goutte, l'eau creuse la pierre.", exp: "Avec de la patience, on vient à bout des plus grands obstacles.", theme: "Patience" },
-            { id: 12, text: "Les paroles s'envolent, les écrits restent.", exp: "Un engagement écrit a une valeur durable.", theme: "Prudence" },
-            { id: 13, text: "On ne prête qu'aux riches.", exp: "On accorde plus facilement des faveurs à ceux qui ont déjà du succès.", theme: "Société" },
-            { id: 14, text: "Il n'y a pas de fumée sans feu.", exp: "Toute rumeur a souvent une part de vérité à son origine.", theme: "Vérité" },
-            { id: 15, text: "À cœur vaillant rien d'impossible.", exp: "Avec du courage, on peut réussir n'importe quel défi.", theme: "Courage" },
-            { id: 16, text: "Qui sème le vent récolte la tempête.", exp: "Provoquer des désordres finit par se retourner contre soi.", theme: "Justice" },
-            { id: 17, text: "Mieux vaut tard que jamais.", exp: "Il vaut mieux accomplir une action tardivement que de ne jamais la faire.", theme: "Temps" },
-            { id: 18, text: "L'union fait la force.", exp: "En rassemblant nos efforts, nous sommes bien plus puissants.", theme: "Entraide" },
-            { id: 19, text: "Comme on fait son lit, on se couche.", exp: "On doit assumer les conséquences de ses propres actes.", theme: "Responsabilité" },
-            { id: 20, text: "Il faut battre le fer tant qu'il est chaud.", exp: "Il faut saisir les opportunités dès qu'elles se présentent.", theme: "Opportunité" },
-            { id: 21, text: "Tout vient à point à qui sait attendre.", exp: "Avec de la patience, on obtient ce que l'on désire.", theme: "Patience" },
-            { id: 22, text: "Les murs ont des oreilles.", exp: "Il faut faire attention à ce que l'on dit.", theme: "Prudence" },
-            { id: 23, text: "Prudence est mère de sûreté.", exp: "En faisant attention, on évite bien des désagréments.", theme: "Prudence" },
-            { id: 24, text: "On ne fait pas d'omelette sans casser des œufs.", exp: "Pour obtenir des résultats, il faut accepter de faire des sacrifices.", theme: "Effort" },
-            { id: 25, text: "La nuit porte conseil.", exp: "Prendre du recul permet de prendre de meilleures décisions.", theme: "Réflexion" },
-            { id: 26, text: "Mieux vaut prévenir que guérir.", exp: "Il est préférable d'anticiper les problèmes.", theme: "Prudence" },
-            { id: 27, text: "Il ne faut pas vendre la peau de l'ours avant de l'avoir tué.", exp: "Ne considérez pas une chose acquise avant de l'avoir obtenue.", theme: "Sagesse" },
-            { id: 28, text: "Qui cherche trouve.", exp: "Avec des efforts, on finit par trouver des solutions.", theme: "Effort" },
-            { id: 29, text: "Il vaut mieux être seul que mal accompagné.", exp: "La solitude est préférable à la mauvaise compagnie.", theme: "Relations" },
-            { id: 30, text: "Les grands esprits se rencontrent.", exp: "Se dit quand deux personnes ont la même idée au même moment.", theme: "Complicité" },
-            { id: 31, text: "Chat échaudé craint l'eau froide.", exp: "Quand on a souffert d'une expérience, on devient méfiant.", theme: "Expérience" },
-            { id: 32, text: "C'est en forgeant qu'on devient forgeron.", exp: "La pratique régulière permet de maîtriser un savoir-faire.", theme: "Apprentissage" },
-            { id: 33, text: "L'argent ne fait pas le bonheur.", exp: "La richesse matérielle ne suffit pas à garantir l'épanouissement.", theme: "Valeurs" },
-            { id: 34, text: "À chaque jour suffit sa peine.", exp: "Il ne sert à rien de s'inquiéter à l'avance pour demain.", theme: "Sérénité" },
-            { id: 35, text: "Ce qui ne tue pas rend plus fort.", exp: "Les épreuves surmontées nous renforcent.", theme: "Résilience" },
-            { id: 36, text: "Chaque chose en son temps.", exp: "Il faut respecter l'ordre naturel sans tout précipiter.", theme: "Patience" },
-            { id: 37, text: "Des goûts et des couleurs, on ne discute pas.", exp: "Chacun a des préférences personnelles à respecter.", theme: "Tolérance" },
-            { id: 38, text: "L'appétit vient en mangeant.", exp: "L'intérêt pour une chose grandit au fur et à mesure.", theme: "Motivation" },
-            { id: 39, text: "Un homme averti en vaut deux.", exp: "Être informé d'un danger permet de mieux s'y préparer.", theme: "Anticipation" },
-            { id: 40, text: "Les petits ruisseaux font les grandes rivières.", exp: "Les petits efforts accumulés donnent de grands résultats.", theme: "Économie" },
-            { id: 41, text: "Il ne faut pas mettre tous ses œufs dans le même panier.", exp: "Il faut diversifier ses risques.", theme: "Prudence" },
-            { id: 42, text: "Toutes les routes mènent à Rome.", exp: "Il existe plusieurs moyens d'arriver au même résultat.", theme: "Flexibilité" },
-            { id: 43, text: "On reconnaît l'arbre à ses fruits.", exp: "C'est par ses actes qu'on évalue la valeur d'une personne.", theme: "Action" },
-            { id: 44, text: "Chose promise, chose due.", exp: "Il faut toujours honorer ses engagements.", theme: "Honnêteté" },
-            { id: 45, text: "Le temps, c'est de l'argent.", exp: "Le temps est une ressource précieuse.", theme: "Temps" },
-            { id: 46, text: "La vérité sort de la bouche des enfants.", exp: "Les enfants s'expriment en toute sincérité.", theme: "Sincérité" },
-            { id: 47, text: "L'espoir fait vivre.", exp: "Garder espoir aide à traverser les moments difficiles.", theme: "Espoir" },
-            { id: 48, text: "Tout ce qui brille n'est pas or.", exp: "Les apparences séduisantes peuvent cacher de la fausseté.", theme: "Discernement" },
-            { id: 49, text: "C'est la goutte d'eau qui fait déborder le vase.", exp: "Un petit détail peut déclencher une grande réaction.", theme: "Limites" },
-            { id: 50, text: "Rira bien qui rira le dernier.", exp: "Le véritable succès se mesure à la fin.", theme: "Persévérance" }
+            { id: 1, text: "L'habit ne fait pas le moine.", exp: "Il ne faut pas juger une personne sur son apparence extérieure." },
+            { id: 2, text: "Qui va lentement arrive sûrement.", exp: "Prendre son temps garantit de mieux réussir ses entreprises." },
+            { id: 3, text: "Après la pluie, le beau temps.", exp: "Les difficultés finissent toujours par laisser place à des jours meilleurs." },
+            { id: 4, text: "Pierre qui roule n'amasse pas mousse.", exp: "Changer trop souvent d'occupation ne permet pas de construire quelque chose de durable." },
+            { id: 5, text: "Chassez le naturel, il revient au galop.", exp: "On ne peut pas masquer sa vraie nature bien longtemps." },
+            { id: 6, text: "Rien ne sert de courir, il faut partir à point.", exp: "La précipitation est inutile, la préparation compte davantage." },
+            { id: 7, text: "Petit à petit, l'oiseau fait son nid.", exp: "C'est avec de la persévérance que l'on accomplit de grandes choses." },
+            { id: 8, text: "Quand le chat n'est pas là, les souris dansent.", exp: "En l'absence d'autorité, chacun profite pour agir à sa guise." },
+            { id: 9, text: "Vouloir, c'est pouvoir.", exp: "La volonté permet de surmonter la plupart des obstacles." },
+            { id: 10, text: "Aux âmes bien nées, la valeur n'attend point le nombre des années.", exp: "Le talent ne dépend pas de l'âge." },
+            { id: 11, text: "Goutte à goutte, l'eau creuse la pierre.", exp: "Avec de la patience, on vient à bout des plus grands obstacles." },
+            { id: 12, text: "Les paroles s'envolent, les écrits restent.", exp: "Un engagement écrit a une valeur durable." },
+            { id: 13, text: "On ne prête qu'aux riches.", exp: "On accorde plus facilement des faveurs à ceux qui ont déjà du succès." },
+            { id: 14, text: "Il n'y a pas de fumée sans feu.", exp: "Toute rumeur a souvent une part de vérité à son origine." },
+            { id: 15, text: "À cœur vaillant rien d'impossible.", exp: "Avec du courage, on peut réussir n'importe quel défi." },
+            { id: 16, text: "Autant en emporte le vent.", exp: "Se dit des promesses qui sont rapidement oubliées." },
+            { id: 17, text: "Qui sème le vent récolte la tempête.", exp: "Provoquer des désordres finit par se retourner contre soi." },
+            { id: 18, text: "L'erreur est humaine, persévérer est diabolique.", exp: "Chacun peut se tromper, mais refuser de corriger ses fautes est grave." },
+            { id: 19, text: "Mieux vaut tard que jamais.", exp: "Il vaut mieux accomplir une action tardivement que de ne jamais la faire." },
+            { id: 20, text: "L'union fait la force.", exp: "En rassemblant nos efforts, nous sommes bien plus puissants." },
+            { id: 21, text: "Comme on fait son lit, on se couche.", exp: "On doit assumer les conséquences de ses propres actes." },
+            { id: 22, text: "Il faut battre le fer tant qu'il est chaud.", exp: "Il faut saisir les opportunités dès qu'elles se présentent." },
+            { id: 23, text: "Tout vient à point à qui sait attendre.", exp: "Avec de la patience, on obtient ce que l'on désire." },
+            { id: 24, text: "Les murs ont des oreilles.", exp: "Il faut faire attention à ce que l'on dit discrètement." },
+            { id: 25, text: "Prudence est mère de sûreté.", exp: "En faisant attention, on évite bien des désagréments." },
+            { id: 26, text: "On ne fait pas d'omelette sans casser des œufs.", exp: "Pour obtenir des résultats, il faut accepter de faire des sacrifices." },
+            { id: 27, text: "Tant va la cruche à l'eau qu'à la fin elle se casse.", exp: "À force de prendre des risques, on finit par subir un problème." },
+            { id: 28, text: "La nuit porte conseil.", exp: "Prendre du recul permet de prendre de meilleures décisions." },
+            { id: 29, text: "Mieux vaut prévenir que guérir.", exp: "Il est préférable d'anticiper les problèmes." },
+            { id: 30, text: "Il ne faut pas vendre la peau de l'ours avant de l'avoir tué.", exp: "Ne considérez pas une chose acquise avant de l'avoir obtenue." },
+            { id: 31, text: "Qui cherche trouve.", exp: "Avec des efforts, on finit par trouver des solutions." },
+            { id: 32, text: "Il vaut mieux être seul que mal accompagné.", exp: "La solitude est préférable à la mauvaise compagnie." },
+            { id: 33, text: "Les grands esprits se rencontrent.", exp: "Se dit quand deux personnes ont la même idée au même moment." },
+            { id: 34, text: "Chat échaudé craint l'eau froide.", exp: "Quand on a souffert d'une expérience, on devient méfiant." },
+            { id: 35, text: "C'est en forgeant qu'on devient forgeron.", exp: "La pratique régulière permet de maîtriser un savoir-faire." },
+            { id: 36, text: "Abondance de biens ne nuit pas.", exp: "Avoir plus que nécessaire n'est pas un problème." },
+            { id: 37, text: "L'argent ne fait pas le bonheur.", exp: "La richesse matérielle ne suffit pas à garantir l'épanouissement." },
+            { id: 38, text: "L'argent est un bon serviteur mais un mauvais maître.", exp: "L'argent doit vous aider, pas régir votre vie." },
+            { id: 39, text: "À chaque jour suffit sa peine.", exp: "Il ne sert à rien de s'inquiéter à l'avance pour demain." },
+            { id: 40, text: "Ce qui ne tue pas rend plus fort.", exp: "Les épreuves surmontées nous renforcent." },
+            { id: 41, text: "Avisé comme un singe, prudent comme un serpent.", exp: "Associer l'intelligence à la prudence évite les pièges." },
+            { id: 42, text: "Bien mal acquis ne profite jamais.", exp: "Ce qui est obtenu par la tromperie ne porte pas bonheur." },
+            { id: 43, text: "Chaque chose en son temps.", exp: "Il faut respecter l'ordre naturel sans tout précipiter." },
+            { id: 44, text: "Des goûts et des couleurs, on ne discute pas.", exp: "Chacun a des préférences personnelles à respecter." },
+            { id: 45, text: "Il n'est pire sourd que celui qui ne veut pas entendre.", exp: "Il est impossible de convaincre quelqu'un qui refuse d'écouter." },
+            { id: 46, text: "Qui trop embrasse mal étreint.", exp: "Vouloir mener trop de projets empêche de les réussir." },
+            { id: 47, text: "Il faut tourner sept fois sa langue dans sa bouche avant de parler.", exp: "Il convient de bien réfléchir avant de s'exprimer." },
+            { id: 48, text: "L'appétit vient en mangeant.", exp: "L'intérêt pour une chose grandit au fur et à mesure." },
+            { id: 49, text: "Nul n'est prophète en son pays.", exp: "On est souvent moins reconnu par ses proches que par des inconnus." },
+            { id: 50, text: "Qui paie ses dettes s'enrichit.", exp: "Se libérer de ses engagements donne la vraie tranquillité d'esprit." },
+            { id: 51, text: "Quand on veut tuer son chien, on dit qu'il a la rage.", exp: "On trouve toujours de mauvais prétextes pour nuire." },
+            { id: 52, text: "Un homme averti en vaut deux.", exp: "Être informé d'un danger permet de mieux s'y préparer." },
+            { id: 53, text: "Les petits ruisseaux font les grandes rivières.", exp: "Les petits efforts accumulés donnent de grands résultats." },
+            { id: 54, text: "Œil pour œil, dent pour dent.", exp: "Loi exigeant une punition égale au tort subi." },
+            { id: 55, text: "Qui aime bien châtie bien.", exp: "Être exigeant est parfois une preuve d'affection." },
+            { id: 56, text: "Il ne faut pas mettre tous ses œufs dans le même panier.", exp: "Il faut diversifier ses risques." },
+            { id: 57, text: "Toutes les routes mènent à Rome.", exp: "Il existe plusieurs moyens d'arriver au même résultat." },
+            { id: 58, text: "On reconnaît l'arbre à ses fruits.", exp: "C'est par ses actes qu'on évalue la valeur d'une personne." },
+            { id: 59, text: "Chacun voit midi à sa porte.", exp: "Chacun juge une situation selon son propre point de vue." },
+            { id: 60, text: "Chose promise, chose due.", exp: "Il faut toujours honorer ses engagements." },
+            { id: 61, text: "Il faut rendre à César ce qui est à César.", exp: "Il faut attribuer à chacun le mérite qui lui revient." },
+            { id: 62, text: "Le temps, c'est de l'argent.", exp: "Le temps est une ressource précieuse." },
+            { id: 63, text: "Les absents ont toujours tort.", exp: "Ceux qui ne sont pas là ne peuvent pas se défendre." },
+            { id: 64, text: "La vérité sort de la bouche des enfants.", exp: "Les enfants s'expriment en toute sincérité." },
+            { id: 65, text: "L'exception confirme la règle.", exp: "La présence d'un cas particulier montre qu'il existe une règle." },
+            { id: 66, text: "L'espoir fait vivre.", exp: "Garder espoir aide à traverser les moments difficiles." },
+            { id: 67, text: "Quand le vin est tiré, il faut le boire.", exp: "Quand une affaire est engagée, il faut aller jusqu'au bout." },
+            { id: 68, text: "Si jeunesse savait, si vieillesse pouvait.", exp: "Les jeunes manquent d'expérience et les anciens de forces." },
+            { id: 69, text: "Tout ce qui brille n'est pas or.", exp: "Les apparences séduisantes peuvent cacher de la fausseté." },
+            { id: 70, text: "Ventre affamé n'a pas d'oreilles.", exp: "Celui qui a faim écoute difficilement les discours." },
+            { id: 71, text: "Nul n'est censé ignorer la loi.", exp: "Chacun doit connaître ses devoirs dans la société." },
+            { id: 72, text: "C'est la goutte d'eau qui fait déborder le vase.", exp: "Un petit détail peut déclencher une grande colère." },
+            { id: 73, text: "Il vaut mieux faire envie que pitié.", exp: "Il est préférable d'avoir du succès." },
+            { id: 74, text: "Qui ne dit mot consent.", exp: "Garder le silence équivaut souvent à un accord." },
+            { id: 75, text: "Le soleil luit pour tout le monde.", exp: "Certaines ressources appartiennent à l'humanité." },
+            { id: 76, text: "À bon vin point d'enseigne.", exp: "Ce qui est de qualité n'a pas besoin de grande publicité." },
+            { id: 77, text: "Autre temps, autres mœurs.", exp: "Les coutumes évoluent avec les générations." },
+            { id: 78, text: "Bon sang ne saurait mentir.", exp: "On retrouve souvent les qualités ou défauts de sa famille." },
+            { id: 79, text: "Du choc des idées jaillit la lumière.", exp: "Échanger des points de vue enrichit la réflexion." },
+            { id: 80, text: "Il n'y a que le premier pas qui coûte.", exp: "Le plus difficile dans un projet est de commencer." },
+            { id: 81, text: "La fin justifie les moyens.", exp: "Certains excusent les méthodes si le résultat est important." },
+            { id: 82, text: "L'oisiveté est la mère de tous les vices.", exp: "Ne rien faire pousse à adopter de mauvais comportements." },
+            { id: 83, text: "Nul ne peut servir deux maîtres à la fois.", exp: "On ne peut pas être loyal à deux causes opposées." },
+            { id: 84, text: "Paris ne s'est pas fait en un jour.", exp: "Les grandes réalisations demandent de la patience." },
+            { id: 85, text: "Qui veut voyager loin ménage sa monture.", exp: "Il faut gérer ses forces pour tenir sur la durée." },
+            { id: 86, text: "Quand le bâtiment va, tout va.", exp: "L'activité économique générale dépend des grands secteurs." },
+            { id: 87, text: "Une hirondelle ne fait pas le printemps.", exp: "Un seul signe favorable ne suffit pas à tout confirmer." },
+            { id: 88, text: "Vouloir ignorer, c'est déjà savoir.", exp: "Refuser une vérité montre qu'on en a conscience." },
+            { id: 89, text: "Ce qui est fait n'est plus à faire.", exp: "Achever une tâche apporte du soulagement." },
+            { id: 90, text: "L'amour est aveugle.", exp: "Les sentiments empêchent souvent de voir les défauts." },
+            { id: 91, text: "La vengeance est un plat qui se mange froid.", exp: "Répondre à une offense demande du calme et du temps." },
+            { id: 92, text: "Mieux vaut plier que rompre.", exp: "Savoir s'adapter permet de traverser les crises." },
+            { id: 93, text: "Un clou chasse l'autre.", exp: "Une nouvelle idée ou personne en fait oublier une autre." },
+            { id: 94, text: "À l'impossible nul n'est tenu.", exp: "On ne peut pas exiger l'impossible." },
+            { id: 95, text: "Bien faire et laisser dire.", exp: "L'important est d'agir avec honnêteté sans écouter les critiques." },
+            { id: 96, text: "Il faut de tout pour faire un monde.", exp: "La diversité des personnalités est naturelle." },
+            { id: 97, text: "Le mieux est l'ennemi du bien.", exp: "À vouloir trop perfectionner, on risque de gâcher." },
+            { id: 98, text: "Nul n'est parfait.", exp: "Chacun possède des défauts ou des faiblesses." },
+            { id: 99, text: "Quand on parle du loup, on en voit la queue.", exp: "Se dit quand la personne dont on parlait arrive." },
+            { id: 100, text: "Rira bien qui rira le dernier.", exp: "Le véritable succès se mesure à la fin." }
         ];
 
         let currentProverb = null;
-        let favorites = JSON.parse(localStorage.getItem('fav_proverbs') || '[]');
 
         function getProverbOfDay() {
             const today = new Date();
@@ -446,59 +282,32 @@
             return proverbs[dayOfYear % proverbs.length];
         }
 
-        function displayToday(proverb) {
-            currentProverb = proverb;
-            document.getElementById('today-quote').textContent = "« " + proverb.text + " »";
-            document.getElementById('today-explanation').textContent = proverb.exp;
-            document.getElementById('today-theme').textContent = proverb.theme;
-
+        function displayProverb(p) {
+            currentProverb = p;
+            document.getElementById('proverb').textContent = "« " + p.text + " »";
+            document.getElementById('explanation').textContent = p.exp;
+            
             const options = { weekday: 'long', day: 'numeric', month: 'long' };
-            document.getElementById('today-date').textContent = new Date().toLocaleDateString('fr-FR', options);
-
-            updateFavBtn();
+            document.getElementById('date').textContent = new Date().toLocaleDateString('fr-FR', options);
         }
 
-        function loadRandomProverb() {
+        function getRandomProverb() {
             const randomIndex = Math.floor(Math.random() * proverbs.length);
-            displayToday(proverbs[randomIndex]);
+            displayProverb(proverbs[randomIndex]);
         }
 
-        function updateFavBtn() {
-            const btn = document.getElementById('fav-btn');
-            const isFav = favorites.includes(currentProverb.id);
-            if (isFav) {
-                btn.classList.add('active-fav');
-                btn.innerHTML = '<i data-lucide="heart"></i> Retirer';
-            } else {
-                btn.classList.remove('active-fav');
-                btn.innerHTML = '<i data-lucide="heart"></i> Favori';
-            }
-            if (window.lucide) lucide.createIcons();
-        }
-
-        function toggleFavoriteCurrent() {
-            const index = favorites.indexOf(currentProverb.id);
-            if (index > -1) {
-                favorites.splice(index, 1);
-            } else {
-                favorites.push(currentProverb.id);
-            }
-            localStorage.setItem('fav_proverbs', JSON.stringify(favorites));
-            updateFavBtn();
-        }
-
-        function speakCurrent() {
+        function speakProverb() {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(currentProverb.text + ". Explication : " + currentProverb.exp);
+                const utterance = new SpeechSynthesisUtterance(currentProverb.text + ". " + currentProverb.exp);
                 utterance.lang = 'fr-FR';
                 window.speechSynthesis.speak(utterance);
             } else {
-                alert('La synthèse vocale n\'est pas disponible.');
+                alert('La synthèse vocale n\'est pas supportée sur cet appareil.');
             }
         }
 
-        function shareCurrent() {
+        function shareProverb() {
             const textToShare = "« " + currentProverb.text + " » - " + currentProverb.exp;
             if (navigator.share) {
                 navigator.share({ title: 'Proverbe du Jour', text: textToShare, url: window.location.href });
@@ -508,82 +317,9 @@
             }
         }
 
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.view-panel').forEach(panel => panel.classList.remove('active'));
-
-            const buttons = document.querySelectorAll('.tab-btn');
-            if (tabName === 'today') {
-                buttons[0].classList.add('active');
-                document.getElementById('view-today').classList.add('active');
-            } else if (tabName === 'explore') {
-                buttons[1].classList.add('active');
-                document.getElementById('view-explore').classList.add('active');
-                renderExplore();
-            } else if (tabName === 'favorites') {
-                buttons[2].classList.add('active');
-                document.getElementById('view-favorites').classList.add('active');
-                renderFavorites();
-            }
-        }
-
-        function renderExplore(items = proverbs) {
-            const container = document.getElementById('explore-list');
-            container.innerHTML = '';
-            items.forEach(p => {
-                const div = document.createElement('div');
-                div.className = 'list-item';
-                div.onclick = () => {
-                    displayToday(p);
-                    switchTab('today');
-                };
-                div.innerHTML = `
-                    <div style="display:flex; justify-content:space-between;">
-                        <span class="theme-tag" style="font-size:0.7rem; padding:3px 8px;">${p.theme}</span>
-                    </div>
-                    <div class="list-item-title">« ${p.text} »</div>
-                    <div class="list-item-desc">${p.exp}</div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function filterProverbs() {
-            const query = document.getElementById('search-input').value.toLowerCase();
-            const filtered = proverbs.filter(p => p.text.toLowerCase().includes(query) || p.exp.toLowerCase().includes(query) || p.theme.toLowerCase().includes(query));
-            renderExplore(filtered);
-        }
-
-        function renderFavorites() {
-            const container = document.getElementById('favorites-list');
-            container.innerHTML = '';
-            const favItems = proverbs.filter(p => favorites.includes(p.id));
-
-            if (favItems.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:var(--text-muted); padding:30px;">Aucun favori pour le moment.</p>';
-                return;
-            }
-
-            favItems.forEach(p => {
-                const div = document.createElement('div');
-                div.className = 'list-item';
-                div.onclick = () => {
-                    displayToday(p);
-                    switchTab('today');
-                };
-                div.innerHTML = `
-                    <div class="list-item-title">« ${p.text} »</div>
-                    <div class="list-item-desc">${p.exp}</div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        // Démarrage de l'application
-        window.addEventListener('DOMContentLoaded', () => {
-            displayToday(getProverbOfDay());
-            if (window.lucide) lucide.createIcons();
-        });
+        window.onload = function() {
+            displayProverb(getProverbOfDay());
+        };
     </script>
 </body>
 </html>
