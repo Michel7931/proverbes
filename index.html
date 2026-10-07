@@ -1,269 +1,570 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Le Proverbe du Jour</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    :root {
-      --bg: #0f172a;
-      --card-bg: rgba(30, 41, 59, 0.7);
-      --card-border: rgba(255, 255, 255, 0.1);
-      --primary: #f59e0b;
-      --primary-hover: #d97706;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --accent: #6366f1;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Proverbe du Jour</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(23, 31, 51, 0.7);
+            --card-border: rgba(255, 215, 0, 0.15);
+            --primary: #fbbf24;
+            --primary-hover: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #818cf8;
+            --accent-glow: rgba(129, 140, 248, 0.25);
+            --danger: #ef4444;
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-    body {
-      background: radial-gradient(circle at top, #1e1b4b, var(--bg));
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-    }
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(129, 140, 248, 0.05) 0%, transparent 50%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 16px;
+        }
 
-    .container {
-      max-width: 600px;
-      width: 100%;
-      margin-top: 20px;
-    }
+        .app-container {
+            width: 100%;
+            max-width: 640px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-    header {
-      text-align: center;
-      margin-bottom: 25px;
-    }
+        header {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
 
-    header h1 {
-      font-family: 'Cinzel', serif;
-      font-size: 2.2rem;
-      color: var(--primary);
-      margin-bottom: 5px;
-    }
+        header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 30%, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
 
-    header p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
+        header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
 
-    .card {
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 28px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-      margin-bottom: 20px;
-    }
+        /* Controls / Tabs */
+        .nav-tabs {
+            display: flex;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 4px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            gap: 4px;
+        }
 
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
+        .tab-btn {
+            flex: 1;
+            padding: 10px 14px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+        }
 
-    .badge {
-      background: rgba(245, 158, 11, 0.15);
-      color: var(--primary);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      border: 1px solid rgba(245, 158, 11, 0.3);
-    }
+        .tab-btn.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
 
-    .date-text {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
+        /* Main Card */
+        .proverb-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 32px 24px;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
 
-    .proverb-text {
-      font-family: 'Cinzel', serif;
-      font-size: 1.5rem;
-      line-height: 1.4;
-      color: var(--text);
-      margin-bottom: 20px;
-      text-align: center;
-    }
+        .proverb-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
 
-    .explanation-title {
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--primary);
-      margin-bottom: 8px;
-      font-weight: 700;
-    }
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .explanation-text {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: var(--text-muted);
-    }
+        .theme-tag {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.25);
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-    .actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 25px;
-    }
+        .date-display {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
 
-    .btn {
-      flex: 1;
-      padding: 12px;
-      border: none;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text);
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: background 0.2s;
-      border: 1px solid var(--card-border);
-    }
+        .proverb-content {
+            text-align: center;
+            padding: 10px 0;
+        }
 
-    .btn:hover {
-      background: rgba(255, 255, 255, 0.15);
-    }
+        .proverb-quote {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            line-height: 1.45;
+            color: var(--text-main);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
 
-    .btn-primary {
-      background: var(--primary);
-      color: #000;
-      border: none;
-    }
+        .explanation-box {
+            background: rgba(15, 23, 42, 0.4);
+            border-left: 3px solid var(--primary);
+            padding: 16px;
+            border-radius: 0 12px 12px 0;
+            text-align: left;
+        }
 
-    .btn-primary:hover {
-      background: var(--primary-hover);
-    }
+        .explanation-box h4 {
+            color: var(--primary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
 
-    footer {
-      margin-top: auto;
-      padding: 20px 0;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      text-align: center;
-    }
-  </style>
+        .explanation-box p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Action Buttons */
+        .card-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            padding: 12px;
+            border-radius: 14px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .action-btn.active-fav {
+            color: var(--danger);
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        /* Search & Filter section */
+        .search-box {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--card-border);
+            padding: 12px 16px 12px 42px;
+            border-radius: 14px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            width: 18px;
+            height: 18px;
+        }
+
+        .proverb-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 450px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .list-item {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .list-item:hover {
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        .list-item-title {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+
+        .list-item-desc {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        /* Views management */
+        .view-panel {
+            display: none;
+        }
+
+        .view-panel.active {
+            display: block;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 20px 0 10px 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <h1>Le Proverbe du Jour</h1>
-      <p>Une sagesse quotidienne à méditer</p>
-    </header>
+    <div class="app-container">
+        <header>
+            <h1>Le Proverbe du Jour</h1>
+            <p>Sagesse & Pensées au quotidien</p>
+        </header>
 
-    <div class="card">
-      <div class="card-header">
-        <span class="badge" id="theme-badge">Sagesse</span>
-        <span class="date-text" id="date-text"></span>
-      </div>
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('today')">
+                <i data-lucide="sparkles"></i> Aujourd'hui
+            </button>
+            <button class="tab-btn" onclick="switchTab('explore')">
+                <i data-lucide="compass"></i> Explorer
+            </button>
+            <button class="tab-btn" onclick="switchTab('favorites')">
+                <i data-lucide="bookmark"></i> Favoris
+            </button>
+        </nav>
 
-      <div class="proverb-text" id="proverb-text">
-        Chargement du proverbe...
-      </div>
+        <!-- Vue : Aujourd'hui -->
+        <div id="view-today" class="view-panel active">
+            <div class="proverb-card">
+                <div class="card-top">
+                    <span class="theme-tag" id="today-theme">Sagesse</span>
+                    <span class="date-display" id="today-date">--</span>
+                </div>
 
-      <div class="explanation-title">Explication</div>
-      <div class="explanation-text" id="explanation-text">
-        ...
-      </div>
+                <div class="proverb-content">
+                    <div class="proverb-quote" id="today-quote">Chargement...</div>
+                    <div class="explanation-box">
+                        <h4>Explication</h4>
+                        <p id="today-explanation">...</p>
+                    </div>
+                </div>
 
-      <div class="actions">
-        <button class="btn btn-primary" onclick="randomProverb()">
-          <i data-lucide="shuffle"></i> Un autre
-        </button>
-        <button class="btn" onclick="shareProverb()">
-          <i data-lucide="share-2"></i> Partager
-        </button>
-      </div>
+                <div class="card-actions">
+                    <button class="action-btn" onclick="speakCurrent()">
+                        <i data-lucide="volume-2"></i> Écouter
+                    </button>
+                    <button class="action-btn" id="fav-btn" onclick="toggleFavoriteCurrent()">
+                        <i data-lucide="heart"></i> Favori
+                    </button>
+                    <button class="action-btn" onclick="shareCurrent()">
+                        <i data-lucide="share-2"></i> Partager
+                    </button>
+                    <button class="action-btn" onclick="loadRandomProverb()">
+                        <i data-lucide="shuffle"></i> Un autre
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vue : Explorer -->
+        <div id="view-explore" class="view-panel">
+            <div class="search-box">
+                <i data-lucide="search"></i>
+                <input type="text" id="search-input" placeholder="Rechercher un proverbe ou un mot clé..." oninput="filterProverbs()">
+            </div>
+            <div class="proverb-list" id="explore-list"></div>
+        </div>
+
+        <!-- Vue : Favoris -->
+        <div id="view-favorites" class="view-panel">
+            <div class="proverb-list" id="favorites-list"></div>
+        </div>
+
+        <footer>
+            <p>Le Proverbe du Jour &bull; Application Web</p>
+        </footer>
     </div>
-  </div>
 
-  <footer>
-    <p>Mis à jour quotidiennement</p>
-  </footer>
+    <script>
+        const proverbs = [
+            { id: 1, text: "L'habit ne fait pas le moine.", exp: "Il ne faut pas juger une personne sur son apparence extérieure.", theme: "Apparence" },
+            { id: 2, text: "Qui va lentement arrive sûrement.", exp: "Prendre son temps garantit de mieux réussir ses entreprises.", theme: "Patience" },
+            { id: 3, text: "Après la pluie, le beau temps.", exp: "Les difficultés finissent toujours par laisser place à des jours meilleurs.", theme: "Espoir" },
+            { id: 4, text: "Pierre qui roule n'amasse pas mousse.", exp: "Changer trop souvent d'occupation ne permet pas d'accumuler des biens ou de l'expérience.", theme: "Constance" },
+            { id: 5, text: "Chassez le naturel, il revient au galop.", exp: "On ne peut pas masquer sa vraie nature bien longtemps.", theme: "Vérité" },
+            { id: 6, text: "Rien ne sert de courir, il faut partir à point.", exp: "La précipitation est inutile, la préparation et la régularité comptent davantage.", theme: "Prudence" },
+            { id: 7, text: "Petit à petit, l'oiseau fait son nid.", exp: "C'est avec de la persévérance et de la patience que l'on accomplit de grandes choses.", theme: "Persévérance" },
+            { id: 8, text: "Quand le chat n'est pas là, les souris dansent.", exp: "En l'absence de maître ou d'autorité, chacun profite pour agir à sa guise.", theme: "Liberté" },
+            { id: 9, text: "Vouloir, c'est pouvoir.", exp: "La volonté permet de surmonter la plupart des obstacles.", theme: "Volonté" },
+            { id: 10, text: "Aux âmes bien nées, la valeur n'attend point le nombre des années.", exp: "Le talent et la valeur personnelle n'attendent pas l'âge adulte.", theme: "Maturité" },
+            { id: 11, text: "Goutte à goutte, l'eau creuse la pierre.", exp: "Avec de la patience et de la régularité, on surmonte de très grands obstacles.", theme: "Patience" },
+            { id: 12, text: "Les paroles s'envolent, les écrits restent.", exp: "Un engagement écrit a une valeur durable par rapport à une promesse orale.", theme: "Prudence" },
+            { id: 13, text: "On ne prête qu'aux riches.", exp: "On accorde plus facilement sa confiance ou ses faveurs à ceux qui ont déjà du succès.", theme: "Société" },
+            { id: 14, text: "Il n'y a pas de fumée sans feu.", exp: "Toute rumeur a souvent une part de vérité à son origine.", theme: "Vérité" },
+            { id: 15, text: "À cœur vaillant rien d'impossible.", exp: "Avec du courage, on peut réussir n'importe quel défi.", theme: "Courage" },
+            { id: 16, text: "Autant en emporte le vent.", exp: "Se dit des promesses ou des paroles qui sont rapidement oubliées.", theme: "Réalité" },
+            { id: 17, text: "Qui sème le vent récolte la tempête.", exp: "Provoquer des désordres finit par se retourner violemment contre soi.", theme: "Justice" },
+            { id: 18, text: "L'erreur est humaine, persévérer est diabolique.", exp: "Tout le monde peut se tromper, mais refuser de corriger ses fautes est impardonnable.", theme: "Sagesse" },
+            { id: 19, text: "Mieux vaut tard que jamais.", exp: "Il vaut mieux accomplir une action tardivement que de ne jamais la faire.", theme: "Temps" },
+            { id: 20, text: "L'union fait la force.", exp: "En rassemblant nos efforts, nous sommes bien plus puissants que seuls.", theme: "Entraide" }
+        ];
 
-  <script>
-    const proverbs = [
-      { text: "L'habit ne fait pas le moine.", exp: "Il ne faut pas juger une personne sur son apparence extérieure.", theme: "Apparence" },
-      { text: "Qui va lentement arrive sûrement.", exp: "Prendre son temps garantit de mieux réussir ses entreprises.", theme: "Patience" },
-      { text: "Après la pluie, le beau temps.", exp: "Les difficultés finissent toujours par passer.", theme: "Espoir" },
-      { text: "Pierre qui roule n'amasse pas mousse.", exp: "Changer trop souvent d'occupation ne permet pas de construire quelque chose de durable.", theme: "Constance" },
-      { text: "Chassez le naturel, il revient au galop.", exp: "On ne peut pas masquer sa vraie nature très longtemps.", theme: "Vérité" },
-      { text: "Rien ne sert de courir, il faut partir à point.", exp: "La précipitation ne remplace pas une bonne préparation.", theme: "Prudence" },
-      { text: "Petit à petit, l'oiseau fait son nid.", exp: "C'est par la persévérance qu'on accomplit de grandes choses.", theme: "Persévérance" },
-      { text: "Quand le chat n'est pas là, les souris dansent.", exp: "En l'absence d'autorité, chacun fait ce qui lui plaît.", theme: "Liberté" },
-      { text: "Vouloir, c'est pouvoir.", exp: "La volonté permet de surmonter la plupart des obstacles.", theme: "Volonté" },
-      { text: "Aux âmes bien nées, la valeur n'attend point le nombre des années.", exp: "Le talent et la maturité ne dépendent pas nécessairement de l'âge.", theme: "Maturité" },
-      { text: "Goutte à goutte, l'eau creuse la pierre.", exp: "Avec de la patience et de la régularité, on surmonte de très grands obstacles.", theme: "Patience" },
-      { text: "Les paroles s'envolent, les écrits restent.", exp: "Un engagement écrit a une valeur durable par rapport à une promesse orale.", theme: "Prudence" },
-      { text: "On ne prête qu'aux riches.", exp: "On accorde plus facilement sa confiance ou ses faveurs à ceux qui ont déjà du succès.", theme: "Société" },
-      { text: "Il n'y a pas de fumée sans feu.", exp: "Toute rumeur a souvent une part de vérité à son origine.", theme: "Vérité" },
-      { text: "À cœur vaillant rien d'impossible.", exp: "Avec du courage, on peut réussir n'importe quel défi.", theme: "Courage" },
-      { text: "Autant en emporte le vent.", exp: "Se dit des promesses ou des paroles qui sont rapidement oubliées.", theme: "Réalité" },
-      { text: "Qui sème le vent récolte la tempête.", exp: "Provoquer des désordres finit par se retourner violemment contre soi.", theme: "Justice" },
-      { text: "L'erreur est humaine, persévérer est diabolique.", exp: "Tout le monde peut se tromper, mais refuser de corriger ses fautes est impardonnable.", theme: "Sagesse" },
-      { text: "Mieux vaut tard que jamais.", exp: "Il vaut mieux accomplir une action tardivement que de ne jamais la faire.", theme: "Temps" },
-      { text: "L'union fait la force.", exp: "En rassemblant nos efforts, nous sommes bien plus puissants que seuls.", theme: "Entraide" }
-    ];
+        let currentProverb = null;
+        let favorites = JSON.parse(localStorage.getItem('fav_proverbs') || '[]');
 
-    function getProverbOfDay() {
-      const today = new Date();
-      const start = new Date(today.getFullYear(), 0, 0);
-      const diff = today - start;
-      const oneDay = 1000 * 60 * 60 * 24;
-      const dayOfYear = Math.floor(diff / oneDay);
-      return proverbs[dayOfYear % proverbs.length];
-    }
+        function getProverbOfDay() {
+            const today = new Date();
+            const start = new Date(today.getFullYear(), 0, 0);
+            const diff = today - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            const dayOfYear = Math.floor(diff / oneDay);
+            return proverbs[dayOfYear % proverbs.length];
+        }
 
-    function displayProverb(item) {
-      document.getElementById('proverb-text').textContent = `« ${item.text} »`;
-      document.getElementById('explanation-text').textContent = item.exp;
-      document.getElementById('theme-badge').textContent = item.theme;
+        function displayToday(proverb) {
+            currentProverb = proverb;
+            document.getElementById('today-quote').textContent = `« ${proverb.text} »`;
+            document.getElementById('today-explanation').textContent = proverb.exp;
+            document.getElementById('today-theme').textContent = proverb.theme;
 
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById('date-text').textContent = new Date().toLocaleDateString('fr-FR', options);
-    }
+            const options = { weekday: 'long', day: 'numeric', month: 'long' };
+            document.getElementById('today-date').textContent = new Date().toLocaleDateString('fr-FR', options);
 
-    function randomProverb() {
-      const randomIndex = Math.floor(Math.random() * proverbs.length);
-      displayProverb(proverbs[randomIndex]);
-    }
+            updateFavBtn();
+        }
 
-    function shareProverb() {
-      const text = document.getElementById('proverb-text').textContent;
-      if (navigator.share) {
-        navigator.share({
-          title: 'Proverbe du jour',
-          text: text,
-          url: window.location.href
-        });
-      } else {
-        navigator.clipboard.writeText(text);
-        alert('Proverbe copié dans le presse-papier !');
-      }
-    }
+        function loadRandomProverb() {
+            const randomIndex = Math.floor(Math.random() * proverbs.length);
+            displayToday(proverbs[randomIndex]);
+        }
 
-    // Initialisation
-    displayProverb(getProverbOfDay());
-    lucide.createIcons();
-  </script>
+        function updateFavBtn() {
+            const btn = document.getElementById('fav-btn');
+            const isFav = favorites.includes(currentProverb.id);
+            if (isFav) {
+                btn.classList.add('active-fav');
+                btn.innerHTML = `<i data-lucide="heart" fill="currentColor"></i> Retirer`;
+            } else {
+                btn.classList.remove('active-fav');
+                btn.innerHTML = `<i data-lucide="heart"></i> Favori`;
+            }
+            lucide.createIcons();
+        }
+
+        function toggleFavoriteCurrent() {
+            const index = favorites.indexOf(currentProverb.id);
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push(currentProverb.id);
+            }
+            localStorage.setItem('fav_proverbs', JSON.stringify(favorites));
+            updateFavBtn();
+            renderFavorites();
+        }
+
+        function speakCurrent() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(`${currentProverb.text}. Explication : ${currentProverb.exp}`);
+                utterance.lang = 'fr-FR';
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('La synthèse vocale n\'est pas supportée sur votre appareil.');
+            }
+        }
+
+        function shareCurrent() {
+            const shareData = {
+                title: 'Proverbe du Jour',
+                text: `« ${currentProverb.text} » - ${currentProverb.exp}`,
+                url: window.location.href
+            };
+            if (navigator.share) {
+                navigator.share(shareData);
+            } else {
+                navigator.clipboard.writeText(`${shareData.text} (${shareData.url})`);
+                alert('Proverbe copié dans votre presse-papier !');
+            }
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.view-panel').forEach(panel => panel.classList.remove('active'));
+
+            if (tabName === 'today') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.getElementById('view-today').classList.add('active');
+            } else if (tabName === 'explore') {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('view-explore').classList.add('active');
+                renderExplore();
+            } else if (tabName === 'favorites') {
+                document.querySelectorAll('.tab-btn')[2].classList.add('active');
+                document.getElementById('view-favorites').classList.add('active');
+                renderFavorites();
+            }
+        }
+
+        function renderExplore(items = proverbs) {
+            const container = document.getElementById('explore-list');
+            container.innerHTML = '';
+            items.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'list-item';
+                div.onclick = () => {
+                    displayToday(p);
+                    switchTab('today');
+                };
+                div.innerHTML = `
+                    <div style="display:flex; justify-content:space-between;">
+                        <span class="theme-tag" style="font-size:0.7rem; padding:3px 8px;">${p.theme}</span>
+                    </div>
+                    <div class="list-item-title">« ${p.text} »</div>
+                    <div class="list-item-desc">${p.exp}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function filterProverbs() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const filtered = proverbs.filter(p => p.text.toLowerCase().includes(query) || p.exp.toLowerCase().includes(query) || p.theme.toLowerCase().includes(query));
+            renderExplore(filtered);
+        }
+
+        function renderFavorites() {
+            const container = document.getElementById('favorites-list');
+            container.innerHTML = '';
+            const favItems = proverbs.filter(p => favorites.includes(p.id));
+
+            if (favItems.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:var(--text-muted); padding:30px;">Aucun favori pour le moment. Cliquez sur le cœur pour en ajouter !</p>';
+                return;
+            }
+
+            favItems.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'list-item';
+                div.onclick = () => {
+                    displayToday(p);
+                    switchTab('today');
+                };
+                div.innerHTML = `
+                    <div class="list-item-title">« ${p.text} »</div>
+                    <div class="list-item-desc">${p.exp}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Initialisation
+        displayToday(getProverbOfDay());
+        lucide.createIcons();
+    </script>
 </body>
 </html>
