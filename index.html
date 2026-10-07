@@ -5,23 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Proverbe du Jour</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- FontAwesome for icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- html2canvas for downloading card as PNG -->
+    <!-- html2canvas for canvas image rendering -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         :root {
             --bg-dark: #0f172a;
-            --bg-card: rgba(30, 41, 59, 0.75);
-            --gold-primary: #f59e0b;
-            --gold-glow: rgba(245, 158, 11, 0.3);
+            --gold-primary: #fbbf24;
+            --gold-glow: rgba(251, 191, 36, 0.4);
             --emerald-accent: #34d399;
-            --emerald-glow: rgba(52, 211, 153, 0.2);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-glass: rgba(255, 255, 255, 0.1);
+            --emerald-glow: rgba(52, 211, 153, 0.3);
+            --text-main: #ffffff;
+            --text-muted: #cbd5e1;
+            --glass-bg: rgba(15, 23, 42, 0.72);
+            --glass-border: rgba(255, 255, 255, 0.18);
         }
 
         * {
@@ -34,10 +34,6 @@
 
         body {
             background-color: var(--bg-dark);
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(245, 158, 11, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 85% 85%, rgba(52, 211, 153, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -45,42 +41,71 @@
             justify-content: center;
             align-items: center;
             padding: 20px 15px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Dynamic Background Layer */
+        .bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: background-image 0.8s ease-in-out;
+            z-index: -2;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.88) 100%);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: -1;
         }
 
         .container {
             width: 100%;
             max-width: 520px;
+            z-index: 1;
         }
 
         header {
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .logo-icon {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             color: var(--gold-primary);
-            margin-bottom: 8px;
-            filter: drop-shadow(0 0 10px var(--gold-glow));
+            margin-bottom: 6px;
+            filter: drop-shadow(0 0 12px var(--gold-glow));
         }
 
         h1 {
             font-family: 'Cinzel', serif;
             color: var(--gold-primary);
-            font-size: 2.2rem;
+            font-size: 2rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
 
         .subtitle {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             margin-top: 4px;
             font-weight: 300;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
         }
 
-        /* Search Section */
         .search-container {
             position: relative;
             margin-bottom: 20px;
@@ -101,13 +126,13 @@
 
         .search-input {
             width: 100%;
-            padding: 14px 16px 14px 45px;
+            padding: 13px 16px 13px 45px;
             border-radius: 14px;
-            border: 1px solid var(--border-glass);
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
             color: var(--text-main);
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             outline: none;
             transition: all 0.3s ease;
         }
@@ -115,7 +140,7 @@
         .search-input:focus {
             border-color: var(--gold-primary);
             box-shadow: 0 0 15px var(--gold-glow);
-            background: rgba(30, 41, 59, 0.95);
+            background: rgba(15, 23, 42, 0.9);
         }
 
         .search-results {
@@ -123,31 +148,27 @@
             top: calc(100% + 6px);
             left: 0;
             right: 0;
-            background: #1e293b;
-            border: 1px solid rgba(245, 158, 11, 0.3);
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(251, 191, 36, 0.4);
             border-radius: 14px;
-            max-height: 240px;
+            max-height: 220px;
             overflow-y: auto;
             z-index: 100;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.8);
             display: none;
         }
 
         .search-item {
             padding: 12px 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             cursor: pointer;
             font-size: 0.88rem;
             transition: background 0.2s;
             text-align: left;
         }
 
-        .search-item:last-child {
-            border-bottom: none;
-        }
-
         .search-item:hover {
-            background: rgba(245, 158, 11, 0.15);
+            background: rgba(251, 191, 36, 0.18);
             color: var(--gold-primary);
         }
 
@@ -159,19 +180,17 @@
             font-weight: 600;
         }
 
-        /* Card Component */
         .card {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--border-glass);
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
             border-radius: 24px;
-            padding: 32px 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            padding: 30px 22px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.2);
             text-align: center;
             position: relative;
             overflow: hidden;
-            transition: transform 0.3s ease;
         }
 
         .card::before {
@@ -189,64 +208,57 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
         .badge {
-            padding: 5px 14px;
+            padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
-            letter-spacing: 0.5px;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
 
         .date-badge {
-            background: rgba(245, 158, 11, 0.12);
+            background: rgba(251, 191, 36, 0.15);
             color: var(--gold-primary);
-            border: 1px solid rgba(245, 158, 11, 0.25);
+            border: 1px solid rgba(251, 191, 36, 0.3);
         }
 
         .theme-badge {
-            background: rgba(52, 211, 153, 0.12);
+            background: rgba(52, 211, 153, 0.15);
             color: var(--emerald-accent);
-            border: 1px solid rgba(52, 211, 153, 0.25);
+            border: 1px solid rgba(52, 211, 153, 0.3);
         }
 
         .proverb-quote {
             font-family: 'Cinzel', serif;
-            font-size: 1.45rem;
+            font-size: 1.4rem;
             line-height: 1.6;
-            margin-bottom: 24px;
+            margin-bottom: 22px;
             color: #ffffff;
             font-weight: 700;
-            position: relative;
-            padding: 0 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
         }
 
         .info-box {
-            font-size: 0.92rem;
-            color: var(--text-muted);
+            font-size: 0.9rem;
+            color: #e2e8f0;
             line-height: 1.6;
-            background: rgba(15, 23, 42, 0.6);
-            padding: 16px;
+            background: rgba(15, 23, 42, 0.7);
+            padding: 15px;
             border-radius: 14px;
             text-align: left;
             margin-bottom: 14px;
             border-left: 4px solid transparent;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
-        .explanation {
-            border-left-color: var(--gold-primary);
-        }
-
-        .positive-thought {
-            border-left-color: var(--emerald-accent);
-            margin-bottom: 26px;
-        }
+        .explanation { border-left-color: var(--gold-primary); }
+        .positive-thought { border-left-color: var(--emerald-accent); margin-bottom: 24px; }
 
         .info-box strong {
             display: flex;
@@ -261,15 +273,10 @@
         .explanation strong { color: var(--gold-primary); }
         .positive-thought strong { color: var(--emerald-accent); }
 
-        .info-box span {
-            color: #e2e8f0;
-        }
-
-        /* Interactive Buttons */
         .btn-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 10px;
         }
 
         .btn {
@@ -277,15 +284,15 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 12px 16px;
+            padding: 12px 14px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.08);
             color: var(--text-main);
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.25s ease;
-            border: 1px solid var(--border-glass);
+            border: 1px solid var(--glass-border);
             outline: none;
         }
 
@@ -297,12 +304,131 @@
             transform: translateY(-2px);
         }
 
-        .btn:active {
-            transform: translateY(0);
+        .btn:active { transform: translateY(0); }
+
+        #exportCardHidden {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            width: 1080px;
+            height: 1920px;
+            box-sizing: border-box;
+            padding: 100px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn-full {
-            grid-column: span 2;
+        .export-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(15,23,42,0.7) 0%, rgba(15,23,42,0.85) 50%, rgba(15,23,42,0.92) 100%);
+            z-index: 1;
+        }
+
+        .export-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+        }
+
+        .export-header {
+            margin-top: 40px;
+        }
+
+        .export-logo {
+            font-size: 70px;
+            color: #fbbf24;
+            margin-bottom: 20px;
+        }
+
+        .export-title {
+            font-family: 'Cinzel', serif;
+            font-size: 58px;
+            color: #fbbf24;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .export-date {
+            font-size: 32px;
+            color: #cbd5e1;
+            margin-top: 10px;
+        }
+
+        .export-main {
+            background: rgba(15, 23, 42, 0.75);
+            border: 2px solid rgba(251, 191, 36, 0.4);
+            border-radius: 40px;
+            padding: 70px 60px;
+            width: 100%;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px);
+        }
+
+        .export-theme {
+            display: inline-block;
+            background: rgba(52, 211, 153, 0.2);
+            color: #34d399;
+            border: 2px solid rgba(52, 211, 153, 0.4);
+            padding: 10px 30px;
+            border-radius: 30px;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .export-quote {
+            font-family: 'Cinzel', serif;
+            font-size: 54px;
+            line-height: 1.5;
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 50px;
+        }
+
+        .export-box {
+            font-size: 32px;
+            line-height: 1.6;
+            background: rgba(15, 23, 42, 0.85);
+            padding: 35px;
+            border-radius: 24px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .export-box-exp { border-left: 8px solid #fbbf24; }
+        .export-box-thought { border-left: 8px solid #34d399; }
+
+        .export-box-title {
+            font-size: 26px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .export-footer {
+            margin-bottom: 40px;
+            font-size: 28px;
+            color: #94a3b8;
+            letter-spacing: 2px;
         }
 
         /* Toast Notifications */
@@ -316,9 +442,9 @@
             border: 1px solid var(--gold-primary);
             padding: 12px 24px;
             border-radius: 30px;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 500;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
             opacity: 0;
             transition: all 0.4s ease;
             z-index: 1000;
@@ -334,39 +460,42 @@
 
         footer {
             text-align: center;
-            margin-top: 24px;
+            margin-top: 20px;
             color: var(--text-muted);
             font-size: 0.8rem;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
         }
 
         @media (max-width: 480px) {
-            h1 { font-size: 1.8rem; }
+            h1 { font-size: 1.7rem; }
             .proverb-quote { font-size: 1.25rem; }
-            .card { padding: 24px 18px; }
-            .btn { font-size: 0.82rem; padding: 10px 12px; }
+            .card { padding: 24px 16px; }
+            .btn { font-size: 0.8rem; padding: 10px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Dynamic Background Layer -->
+    <div id="bgLayer" class="bg-layer"></div>
+    <div class="bg-overlay"></div>
+
     <div class="container">
         <header>
             <div class="logo-icon"><i class="fa-solid fa-book-open-reader"></i></div>
             <h1>Le Proverbe du Jour</h1>
-            <p class="subtitle">Sagesse, inspiration & pensées quotidiennes</p>
+            <p class="subtitle">Sagesse & Sérénité au quotidien</p>
         </header>
 
-        <!-- Search Bar -->
         <div class="search-container">
             <div class="search-wrapper">
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                <input type="text" id="searchInput" class="search-input" placeholder="Rechercher par mot-clé ou thème..." onkeyup="searchProverb()">
+                <input type="text" id="searchInput" class="search-input" placeholder="Rechercher un proverbe, un thème..." onkeyup="searchProverb()">
             </div>
             <div id="searchResults" class="search-results"></div>
         </div>
 
-        <!-- Main Proverb Card -->
-        <div class="card" id="cardToCapture">
+        <div class="card" id="cardMain">
             <div class="badge-group">
                 <span class="badge date-badge"><i class="fa-regular fa-calendar"></i> <span id="date">--</span></span>
                 <span class="badge theme-badge"><i class="fa-solid fa-tag"></i> <span id="theme">--</span></span>
@@ -387,8 +516,9 @@
             <div class="btn-grid">
                 <button class="btn" onclick="speakProverb()"><i class="fa-solid fa-volume-high"></i> Écouter</button>
                 <button class="btn" onclick="shareProverb()"><i class="fa-solid fa-share-nodes"></i> Partager</button>
-                <button class="btn" onclick="downloadImage()"><i class="fa-solid fa-image"></i> Télécharger image</button>
-                <button class="btn" onclick="getRandomProverb()"><i class="fa-solid fa-dice"></i> Un autre</button>
+                <button class="btn" onclick="changeBackgroundImage()"><i class="fa-solid fa-arrows-rotate"></i> Changer image</button>
+                <button class="btn" onclick="downloadHDImage()"><i class="fa-solid fa-image"></i> Carte image</button>
+                <button class="btn btn-full" onclick="getRandomProverb()" style="grid-column: span 2;"><i class="fa-solid fa-dice"></i> Un autre proverbe</button>
             </div>
         </div>
 
@@ -397,41 +527,68 @@
         </footer>
     </div>
 
+    <div id="exportCardHidden">
+        <div class="export-overlay"></div>
+        <div class="export-content">
+            <div class="export-header">
+                <div class="export-logo"><i class="fa-solid fa-book-open-reader"></i></div>
+                <div class="export-title">Le Proverbe du Jour</div>
+                <div class="export-date" id="exportDate">--</div>
+            </div>
+
+            <div class="export-main">
+                <div class="export-theme" id="exportTheme">THÈME</div>
+                <div class="export-quote" id="exportProverb">« ... »</div>
+                
+                <div class="export-box export-box-exp">
+                    <div class="export-box-title" style="color: #fbbf24;">💡 Explication</div>
+                    <div id="exportExp" style="color: #f8fafc;">...</div>
+                </div>
+
+                <div class="export-box export-box-thought">
+                    <div class="export-box-title" style="color: #34d399;">🌱 Pensée Positive</div>
+                    <div id="exportThought" style="color: #f8fafc;">...</div>
+                </div>
+            </div>
+
+            <div class="export-footer">
+                Sagesse & Méditation Quotidienne
+            </div>
+        </div>
+    </div>
+
     <div id="toast" class="toast"><i class="fa-solid fa-circle-check"></i> <span id="toastMsg">Action effectuée !</span></div>
 
     <script>
-        // Database of Proverbs
+        // Proverb Dataset
         const proverbs = [
-            { id: 1, theme: "Apparence", text: "L'habit ne fait pas le moine.", exp: "Il ne faut pas juger une personne sur son apparence extérieure.", thought: "Aujourd'hui, je prends le temps de découvrir la richesse intérieure des gens qui m'entourent." },
-            { id: 2, theme: "Patience", text: "Qui va lentement arrive sûrement.", exp: "Prendre son temps garantit de mieux réussir ses entreprises.", thought: "Je respire et j'avance à mon propre rythme. Chaque petit pas me rapproche de mon objectif." },
-            { id: 3, theme: "Espoir", text: "Après la pluie, le beau temps.", exp: "Les difficultés finissent toujours par laisser place à des jours meilleurs.", thought: "Peu importe les nuages d'aujourd'hui, le soleil finit toujours par briller à nouveau." },
-            { id: 4, theme: "Constance", text: "Pierre qui roule n'amasse pas mousse.", exp: "Changer trop souvent d'occupation ne permet pas de construire quelque chose de durable.", thought: "Je choisis un objectif important aujourd'hui et j'y consacre toute mon attention." },
-            { id: 5, theme: "Authenticité", text: "Chassez le naturel, il revient au galop.", exp: "On ne peut pas masquer sa vraie nature bien longtemps.", thought: "J'embrasse pleinement qui je suis aujourd'hui sans chercher à jouer un rôle." },
-            { id: 6, theme: "Préparation", text: "Rien ne sert de courir, il faut partir à point.", exp: "La précipitation est inutile, la préparation compte davantage.", thought: "Je prends un moment pour planifier ma journée dans le calme et la sérénité." },
-            { id: 7, theme: "Persévérance", text: "Petit à petit, l'oiseau fait son nid.", exp: "C'est avec de la persévérance que l'on accomplit de grandes choses.", thought: "Je célèbre chaque petite victoire quotidienne, elles construisent mes grands succès." },
-            { id: 8, theme: "Volonté", text: "Vouloir, c'est pouvoir.", exp: "La volonté permet de surmonter la plupart des obstacles.", thought: "J'ai en moi toute la force et la détermination nécessaires pour concrétiser mes rêves." },
-            { id: 9, theme: "Talent", text: "Aux âmes bien nées, la valeur n'attend point le nombre des années.", exp: "Le talent ne dépend pas de l'âge.", thought: "Mon potentiel est immense, quel que soit mon âge ou mon expérience passée." },
-            { id: 10, theme: "Courage", text: "À cœur vaillant rien d'impossible.", exp: "Avec du courage, on peut réussir n'importe quel défi.", thought: "J'aborde ce jour avec un cœur courageux et ouvert à toutes les belles possibilités." },
-            { id: 11, theme: "Actions", text: "Qui sème le vent récolte la tempête.", exp: "Provoquer des désordres finit par se retourner contre soi.", thought: "Aujourd'hui, je sème la bienveillance et l'écoute autour de moi." },
-            { id: 12, theme: "Sagesse", text: "L'erreur est humaine, persévérer est diabolique.", exp: "Chacun peut se tromper, mais refuser de corriger ses fautes est une faute.", thought: "J'accepte mes erreurs comme des leçons précieuses qui me font grandir." },
-            { id: 13, theme: "Optimisme", text: "Mieux vaut tard que jamais.", exp: "Il vaut mieux accomplir une action tardivement que de ne jamais la faire.", thought: "Il n'est jamais trop tard pour commencer un beau projet ou prendre soin de soi." },
-            { id: 14, theme: "Entraide", text: "L'union fait la force.", exp: "En rassemblant nos efforts, nous sommes bien plus puissants.", thought: "Je cherche aujourd'hui à collaborer et à partager un moment chaleureux avec autrui." },
-            { id: 15, theme: "Opportunité", text: "Il faut battre le fer tant qu'il est chaud.", exp: "Il faut saisir les opportunités dès qu'elles se présentent.", thought: "Je suis attentif aux opportunités d'aujourd'hui et j'agis avec enthousiasme." },
-            { id: 16, theme: "Sérénité", text: "Tout vient à point à qui sait attendre.", exp: "Avec de la patience, on obtient ce que l'on désire.", thought: "Je fais confiance au cours de la vie et j'accueille chaque moment avec paix." },
-            { id: 17, theme: "Prudence", text: "Prudence est mère de sûreté.", exp: "En faisant attention, on évite bien des désagréments.", thought: "Je prends soin de moi et de mes proches avec attention et douceur." },
-            { id: 18, theme: "Santé", text: "Mieux vaut prévenir que guérir.", exp: "Il est préférable d'anticiper les problèmes.", thought: "Je prends soin de ma santé physique et mentale dès aujourd'hui." },
-            { id: 19, theme: "Pratique", text: "C'est en forgeant qu'on devient forgeron.", exp: "La pratique régulière permet de maîtriser un savoir-faire.", thought: "Chaque entraînement développe mes talents et ma confiance en moi." },
-            { id: 20, theme: "Présent", text: "À chaque jour suffit sa peine.", exp: "Il ne sert à rien de s'inquiéter à l'avance pour demain.", thought: "Aujourd'hui est un jour nouveau, plein de fraîcheur et d'opportunités." },
-            { id: 21, theme: "Résilience", text: "Ce qui ne tue pas rend plus fort.", exp: "Les épreuves surmontées nous renforcent.", thought: "Chaque défi surmonté révèle ma résistance extraordinaire." },
-            { id: 22, theme: "Écoute", text: "Il n'est pire sourd que celui qui ne veut pas entendre.", exp: "Il est difficile de convaincre quelqu'un qui refuse d'écouter.", thought: "J'offre une écoute sincère et attentive aux personnes que je croise." },
-            { id: 23, theme: "Focus", text: "Qui trop embrasse mal étreint.", exp: "Vouloir mener trop de projets empêche de les réussir.", thought: "Je me concentre sur ce qui compte vraiment et j'y prends du plaisir." },
-            { id: 24, theme: "Audace", text: "Il n'y a que le premier pas qui coûte.", exp: "Le plus difficile dans un projet est de commencer.", thought: "Je me lance aujourd'hui avec confiance, le chemin se révélera pas à pas." },
-            { id: 25, theme: "Souplesse", text: "Mieux vaut plier que rompre.", exp: "Savoir s'adapter permet de traverser les crises.", thought: "Ma souplesse d'esprit est ma plus grande protection face aux imprévus." }
+            { id: 1, theme: "Apparence", tag: "nature", text: "L'habit ne fait pas le moine.", exp: "Il ne faut pas juger une personne sur son apparence extérieure.", thought: "Aujourd'hui, je prends le temps de découvrir la richesse intérieure des gens qui m'entourent." },
+            { id: 2, theme: "Patience", tag: "patience", text: "Qui va lentement arrive sûrement.", exp: "Prendre son temps garantit de mieux réussir ses entreprises.", thought: "Je respire et j'avance à mon propre rythme. Chaque petit pas me rapproche de mon objectif." },
+            { id: 3, theme: "Espoir", tag: "light", text: "Après la pluie, le beau temps.", exp: "Les difficultés finissent toujours par laisser place à des jours meilleurs.", thought: "Peu importe les nuages d'aujourd'hui, le soleil finit toujours par briller à nouveau." },
+            { id: 4, theme: "Constance", tag: "mountain", text: "Pierre qui roule n'amasse pas mousse.", exp: "Changer trop souvent d'occupation ne permet pas de construire quelque chose de durable.", thought: "Je choisis un objectif important aujourd'hui et j'y consacre toute mon attention." },
+            { id: 5, theme: "Authenticité", tag: "forest", text: "Chassez le naturel, il revient au galop.", exp: "On ne peut pas masquer sa vraie nature bien longtemps.", thought: "J'embrasse pleinement qui je suis aujourd'hui sans chercher à jouer un rôle." },
+            { id: 6, theme: "Préparation", tag: "time", text: "Rien ne sert de courir, il faut partir à point.", exp: "La précipitation est inutile, la préparation compte davantage.", thought: "Je prends un moment pour planifier ma journée dans le calme et la sérénité." },
+            { id: 7, theme: "Persévérance", tag: "strength", text: "Petit à petit, l'oiseau fait son nid.", exp: "C'est avec de la persévérance que l'on accomplit de grandes choses.", thought: "Je célèbre chaque petite victoire quotidienne, elles construisent mes grands succès." },
+            { id: 8, theme: "Volonté", tag: "space", text: "Vouloir, c'est pouvoir.", exp: "La volonté permet de surmonter la plupart des obstacles.", thought: "J'ai en moi toute la force et la détermination nécessaires pour concrétiser mes rêves." },
+            { id: 9, theme: "Talent", tag: "wisdom", text: "Aux âmes bien nées, la valeur n'attend point le nombre des années.", exp: "Le talent ne dépend pas de l'âge.", thought: "Mon potentiel est immense, quel que soit mon âge ou mon expérience passée." },
+            { id: 10, theme: "Courage", tag: "ocean", text: "À cœur vaillant rien d'impossible.", exp: "Avec du courage, on peut réussir n'importe quel défi.", thought: "J'aborde ce jour avec un cœur courageux et ouvert à toutes les belles possibilités." },
+            { id: 11, theme: "Actions", tag: "nature", text: "Qui sème le vent récolte la tempête.", exp: "Provoquer des désordres finit par se retourner contre soi.", thought: "Aujourd'hui, je sème la bienveillance et l'écoute autour de moi." },
+            { id: 12, theme: "Sagesse", tag: "wisdom", text: "L'erreur est humaine, persévérer est diabolique.", exp: "Chacun peut se tromper, mais refuser de corriger ses fautes est une faute.", thought: "J'accepte mes erreurs comme des leçons précieuses qui me font grandir." },
+            { id: 13, theme: "Optimisme", tag: "light", text: "Mieux vaut tard que jamais.", exp: "Il vaut mieux accomplir une action tardivement que de ne jamais la faire.", thought: "Il n'est jamais trop tard pour commencer un beau projet ou prendre soin de soi." },
+            { id: 14, theme: "Entraide", tag: "forest", text: "L'union fait la force.", exp: "En rassemblant nos efforts, nous sommes bien plus puissants.", thought: "Je cherche aujourd'hui à collaborer et à partager un moment chaleureux avec autrui." },
+            { id: 15, theme: "Opportunité", tag: "time", text: "Il faut battre le fer tant qu'il est chaud.", exp: "Il faut saisir les opportunités dès qu'elles se présentent.", thought: "Je suis attentif aux opportunités d'aujourd'hui et j'agis avec enthousiasme." },
+            { id: 16, theme: "Sérénité", tag: "ocean", text: "Tout vient à point à qui sait attendre.", exp: "Avec de la patience, on obtient ce que l'on désire.", thought: "Je fais confiance au cours de la vie et j'accueille chaque moment avec paix." },
+            { id: 17, theme: "Prudence", tag: "mountain", text: "Prudence est mère de sûreté.", exp: "En faisant attention, on évite bien des désagréments.", thought: "Je prends soin de moi et de mes proches avec attention et douceur." },
+            { id: 18, theme: "Santé", tag: "nature", text: "Mieux vaut prévenir que guérir.", exp: "Il est préférable d'anticiper les problèmes.", thought: "Je prends soin de ma santé physique et mentale dès aujourd'hui." },
+            { id: 19, theme: "Pratique", tag: "strength", text: "C'est en forgeant qu'on devient forgeron.", exp: "La pratique régulière permet de maîtriser un savoir-faire.", thought: "Chaque entraînement développe mes talents et ma confiance en moi." },
+            { id: 20, theme: "Présent", tag: "light", text: "À chaque jour suffit sa peine.", exp: "Il ne sert à rien de s'inquiéter à l'avance pour demain.", thought: "Aujourd'hui est un jour nouveau, plein de fraîcheur et d'opportunités." }
         ];
 
         let currentProverb = null;
+        let imageSeed = 1;
+        let currentBgUrl = '';
 
-        // Get daily proverb based on calendar date
+        // Get daily proverb
         function getProverbOfDay() {
             const today = new Date();
             const start = new Date(today.getFullYear(), 0, 0);
@@ -441,9 +598,16 @@
             return proverbs[dayOfYear % proverbs.length];
         }
 
-        // Render Proverb to Card
+        // Generate thematic HD image URL from Picsum / Unsplash keyword proxy
+        function getThematicImageUrl(tag, seed) {
+            return `https://picsum.photos/seed/${tag}-${seed}/1200/1600`;
+        }
+
+        // Display Proverb and update thematic background
         function displayProverb(p) {
             currentProverb = p;
+            imageSeed = Math.floor(Math.random() * 100) + 1;
+
             document.getElementById('proverb').textContent = "« " + p.text + " »";
             document.getElementById('explanation').textContent = p.exp;
             document.getElementById('thought').textContent = p.thought;
@@ -451,17 +615,47 @@
             
             const options = { weekday: 'long', day: 'numeric', month: 'long' };
             const todayFormatted = new Date().toLocaleDateString('fr-FR', options);
-            document.getElementById('date').textContent = todayFormatted.charAt(0).toUpperCase() + todayFormatted.slice(1);
+            const formattedDate = todayFormatted.charAt(0).toUpperCase() + todayFormatted.slice(1);
+            
+            document.getElementById('date').textContent = formattedDate;
+
+            // Update Export Elements
+            document.getElementById('exportDate').textContent = formattedDate;
+            document.getElementById('exportTheme').textContent = p.theme;
+            document.getElementById('exportProverb').textContent = "« " + p.text + " »";
+            document.getElementById('exportExp').textContent = p.exp;
+            document.getElementById('exportThought').textContent = p.thought;
+
+            updateBackgroundImage();
         }
 
-        // Random Proverb Action
+        function updateBackgroundImage() {
+            currentBgUrl = getThematicImageUrl(currentProverb.tag, imageSeed);
+            const bgLayer = document.getElementById('bgLayer');
+            const exportCard = document.getElementById('exportCardHidden');
+
+            // Preload image to avoid flicker
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            img.onload = function() {
+                bgLayer.style.backgroundImage = `url('${currentBgUrl}')`;
+                exportCard.style.backgroundImage = `url('${currentBgUrl}')`;
+            };
+            img.src = currentBgUrl;
+        }
+
+        function changeBackgroundImage() {
+            imageSeed += 1;
+            updateBackgroundImage();
+            showToast("Nouvelle image de fond !");
+        }
+
         function getRandomProverb() {
             const randomIndex = Math.floor(Math.random() * proverbs.length);
             displayProverb(proverbs[randomIndex]);
-            showToast("Nouveau proverbe tiré !");
+            showToast("Proverbe pioché !");
         }
 
-        // Text to Speech
         function speakProverb() {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
@@ -472,11 +666,10 @@
                 window.speechSynthesis.speak(utterance);
                 showToast("Lecture vocale démarrée...");
             } else {
-                showToast("Synthèse vocale non disponible.");
+                showToast("Synthèse vocale indisponible.");
             }
         }
 
-        // Share functionality
         function shareProverb() {
             const textToShare = `« ${currentProverb.text} »\n\n💡 Explication : ${currentProverb.exp}\n🌱 Pensée positive : ${currentProverb.thought}`;
             
@@ -487,7 +680,6 @@
                     url: window.location.href
                 }).catch(() => {});
             } else {
-                // Clipboard fallback
                 const dummy = document.createElement("textarea");
                 document.body.appendChild(dummy);
                 dummy.value = textToShare;
@@ -498,29 +690,30 @@
             }
         }
 
-        // Download Card as PNG Image
-        function downloadImage() {
-            showToast("Génération de l'image...");
-            const card = document.getElementById('cardToCapture');
-            
-            html2canvas(card, {
-                backgroundColor: '#0f172a',
-                scale: 2,
+        function downloadHDImage() {
+            showToast("Génération de la carte HD...");
+            const exportCard = document.getElementById('exportCardHidden');
+
+            html2canvas(exportCard, {
                 useCORS: true,
+                allowTaint: true,
+                scale: 1,
+                width: 1080,
+                height: 1920,
                 logging: false
             }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = `proverbe-${currentProverb.theme.toLowerCase()}.png`;
+                link.download = `proverbe-${currentProverb.theme.toLowerCase()}-hd.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
-                showToast("Image téléchargée !");
+                showToast("Carte HD téléchargée !");
             }).catch(err => {
-                showToast("Erreur lors de la création de l'image");
+                showToast("Erreur lors du téléchargement");
                 console.error(err);
             });
         }
 
-        // Search Proverb Engine
+        // Search engine
         function searchProverb() {
             const input = document.getElementById('searchInput').value.toLowerCase().trim();
             const resultsContainer = document.getElementById('searchResults');
@@ -561,7 +754,6 @@
             resultsContainer.style.display = 'block';
         }
 
-        // Notification Toast
         function showToast(message) {
             const toast = document.getElementById('toast');
             const toastMsg = document.getElementById('toastMsg');
@@ -572,14 +764,12 @@
             }, 3000);
         }
 
-        // Close search results when clicking outside
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.search-container')) {
                 document.getElementById('searchResults').style.display = 'none';
             }
         });
 
-        // Initialize on Load
         window.onload = function() {
             displayProverb(getProverbOfDay());
         };
