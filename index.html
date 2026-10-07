@@ -10,6 +10,7 @@
             --bg-color: #0f172a;
             --card-bg: rgba(30, 41, 59, 0.7);
             --accent-gold: #f59e0b;
+            --accent-green: #34d399;
             --text-light: #f8fafc;
             --text-dim: #94a3b8;
         }
@@ -86,24 +87,39 @@
             color: #ffffff;
         }
 
-        .explanation {
+        .info-box {
             font-size: 0.9rem;
             color: var(--text-dim);
             line-height: 1.5;
             background: rgba(15, 23, 42, 0.5);
             padding: 15px;
             border-radius: 12px;
-            border-left: 3px solid var(--accent-gold);
             text-align: left;
+            margin-bottom: 14px;
+        }
+
+        .explanation {
+            border-left: 3px solid var(--accent-gold);
+        }
+
+        .positive-thought {
+            border-left: 3px solid var(--accent-green);
             margin-bottom: 24px;
         }
 
-        .explanation strong {
-            color: var(--accent-gold);
+        .info-box strong {
             display: block;
             margin-bottom: 4px;
             font-size: 0.8rem;
             text-transform: uppercase;
+        }
+
+        .explanation strong {
+            color: var(--accent-gold);
+        }
+
+        .positive-thought strong {
+            color: var(--accent-green);
         }
 
         .btn-group {
@@ -150,9 +166,15 @@
         <div class="card">
             <span class="date-badge" id="date">--</span>
             <div class="proverb-text" id="proverb">Chargement...</div>
-            <div class="explanation">
+            
+            <div class="info-box explanation">
                 <strong>Explication</strong>
                 <span id="explanation">...</span>
+            </div>
+
+            <div class="info-box positive-thought">
+                <strong>🌱 Pensée Positive</strong>
+                <span id="thought">...</span>
             </div>
 
             <div class="btn-group">
@@ -163,112 +185,112 @@
         </div>
 
         <footer>
-            Proverbe du Jour • 100 Proverbes en Stock
+            Proverbe du Jour • 100 Proverbes & Inspirations
         </footer>
     </div>
 
     <script>
         const proverbs = [
-            { id: 1, text: "L'habit ne fait pas le moine.", exp: "Il ne faut pas juger une personne sur son apparence extérieure." },
-            { id: 2, text: "Qui va lentement arrive sûrement.", exp: "Prendre son temps garantit de mieux réussir ses entreprises." },
-            { id: 3, text: "Après la pluie, le beau temps.", exp: "Les difficultés finissent toujours par laisser place à des jours meilleurs." },
-            { id: 4, text: "Pierre qui roule n'amasse pas mousse.", exp: "Changer trop souvent d'occupation ne permet pas de construire quelque chose de durable." },
-            { id: 5, text: "Chassez le naturel, il revient au galop.", exp: "On ne peut pas masquer sa vraie nature bien longtemps." },
-            { id: 6, text: "Rien ne sert de courir, il faut partir à point.", exp: "La précipitation est inutile, la préparation compte davantage." },
-            { id: 7, text: "Petit à petit, l'oiseau fait son nid.", exp: "C'est avec de la persévérance que l'on accomplit de grandes choses." },
-            { id: 8, text: "Quand le chat n'est pas là, les souris dansent.", exp: "En l'absence d'autorité, chacun profite pour agir à sa guise." },
-            { id: 9, text: "Vouloir, c'est pouvoir.", exp: "La volonté permet de surmonter la plupart des obstacles." },
-            { id: 10, text: "Aux âmes bien nées, la valeur n'attend point le nombre des années.", exp: "Le talent ne dépend pas de l'âge." },
-            { id: 11, text: "Goutte à goutte, l'eau creuse la pierre.", exp: "Avec de la patience, on vient à bout des plus grands obstacles." },
-            { id: 12, text: "Les paroles s'envolent, les écrits restent.", exp: "Un engagement écrit a une valeur durable." },
-            { id: 13, text: "On ne prête qu'aux riches.", exp: "On accorde plus facilement des faveurs à ceux qui ont déjà du succès." },
-            { id: 14, text: "Il n'y a pas de fumée sans feu.", exp: "Toute rumeur a souvent une part de vérité à son origine." },
-            { id: 15, text: "À cœur vaillant rien d'impossible.", exp: "Avec du courage, on peut réussir n'importe quel défi." },
-            { id: 16, text: "Autant en emporte le vent.", exp: "Se dit des promesses qui sont rapidement oubliées." },
-            { id: 17, text: "Qui sème le vent récolte la tempête.", exp: "Provoquer des désordres finit par se retourner contre soi." },
-            { id: 18, text: "L'erreur est humaine, persévérer est diabolique.", exp: "Chacun peut se tromper, mais refuser de corriger ses fautes est grave." },
-            { id: 19, text: "Mieux vaut tard que jamais.", exp: "Il vaut mieux accomplir une action tardivement que de ne jamais la faire." },
-            { id: 20, text: "L'union fait la force.", exp: "En rassemblant nos efforts, nous sommes bien plus puissants." },
-            { id: 21, text: "Comme on fait son lit, on se couche.", exp: "On doit assumer les conséquences de ses propres actes." },
-            { id: 22, text: "Il faut battre le fer tant qu'il est chaud.", exp: "Il faut saisir les opportunités dès qu'elles se présentent." },
-            { id: 23, text: "Tout vient à point à qui sait attendre.", exp: "Avec de la patience, on obtient ce que l'on désire." },
-            { id: 24, text: "Les murs ont des oreilles.", exp: "Il faut faire attention à ce que l'on dit discrètement." },
-            { id: 25, text: "Prudence est mère de sûreté.", exp: "En faisant attention, on évite bien des désagréments." },
-            { id: 26, text: "On ne fait pas d'omelette sans casser des œufs.", exp: "Pour obtenir des résultats, il faut accepter de faire des sacrifices." },
-            { id: 27, text: "Tant va la cruche à l'eau qu'à la fin elle se casse.", exp: "À force de prendre des risques, on finit par subir un problème." },
-            { id: 28, text: "La nuit porte conseil.", exp: "Prendre du recul permet de prendre de meilleures décisions." },
-            { id: 29, text: "Mieux vaut prévenir que guérir.", exp: "Il est préférable d'anticiper les problèmes." },
-            { id: 30, text: "Il ne faut pas vendre la peau de l'ours avant de l'avoir tué.", exp: "Ne considérez pas une chose acquise avant de l'avoir obtenue." },
-            { id: 31, text: "Qui cherche trouve.", exp: "Avec des efforts, on finit par trouver des solutions." },
-            { id: 32, text: "Il vaut mieux être seul que mal accompagné.", exp: "La solitude est préférable à la mauvaise compagnie." },
-            { id: 33, text: "Les grands esprits se rencontrent.", exp: "Se dit quand deux personnes ont la même idée au même moment." },
-            { id: 34, text: "Chat échaudé craint l'eau froide.", exp: "Quand on a souffert d'une expérience, on devient méfiant." },
-            { id: 35, text: "C'est en forgeant qu'on devient forgeron.", exp: "La pratique régulière permet de maîtriser un savoir-faire." },
-            { id: 36, text: "Abondance de biens ne nuit pas.", exp: "Avoir plus que nécessaire n'est pas un problème." },
-            { id: 37, text: "L'argent ne fait pas le bonheur.", exp: "La richesse matérielle ne suffit pas à garantir l'épanouissement." },
-            { id: 38, text: "L'argent est un bon serviteur mais un mauvais maître.", exp: "L'argent doit vous aider, pas régir votre vie." },
-            { id: 39, text: "À chaque jour suffit sa peine.", exp: "Il ne sert à rien de s'inquiéter à l'avance pour demain." },
-            { id: 40, text: "Ce qui ne tue pas rend plus fort.", exp: "Les épreuves surmontées nous renforcent." },
-            { id: 41, text: "Avisé comme un singe, prudent comme un serpent.", exp: "Associer l'intelligence à la prudence évite les pièges." },
-            { id: 42, text: "Bien mal acquis ne profite jamais.", exp: "Ce qui est obtenu par la tromperie ne porte pas bonheur." },
-            { id: 43, text: "Chaque chose en son temps.", exp: "Il faut respecter l'ordre naturel sans tout précipiter." },
-            { id: 44, text: "Des goûts et des couleurs, on ne discute pas.", exp: "Chacun a des préférences personnelles à respecter." },
-            { id: 45, text: "Il n'est pire sourd que celui qui ne veut pas entendre.", exp: "Il est impossible de convaincre quelqu'un qui refuse d'écouter." },
-            { id: 46, text: "Qui trop embrasse mal étreint.", exp: "Vouloir mener trop de projets empêche de les réussir." },
-            { id: 47, text: "Il faut tourner sept fois sa langue dans sa bouche avant de parler.", exp: "Il convient de bien réfléchir avant de s'exprimer." },
-            { id: 48, text: "L'appétit vient en mangeant.", exp: "L'intérêt pour une chose grandit au fur et à mesure." },
-            { id: 49, text: "Nul n'est prophète en son pays.", exp: "On est souvent moins reconnu par ses proches que par des inconnus." },
-            { id: 50, text: "Qui paie ses dettes s'enrichit.", exp: "Se libérer de ses engagements donne la vraie tranquillité d'esprit." },
-            { id: 51, text: "Quand on veut tuer son chien, on dit qu'il a la rage.", exp: "On trouve toujours de mauvais prétextes pour nuire." },
-            { id: 52, text: "Un homme averti en vaut deux.", exp: "Être informé d'un danger permet de mieux s'y préparer." },
-            { id: 53, text: "Les petits ruisseaux font les grandes rivières.", exp: "Les petits efforts accumulés donnent de grands résultats." },
-            { id: 54, text: "Œil pour œil, dent pour dent.", exp: "Loi exigeant une punition égale au tort subi." },
-            { id: 55, text: "Qui aime bien châtie bien.", exp: "Être exigeant est parfois une preuve d'affection." },
-            { id: 56, text: "Il ne faut pas mettre tous ses œufs dans le même panier.", exp: "Il faut diversifier ses risques." },
-            { id: 57, text: "Toutes les routes mènent à Rome.", exp: "Il existe plusieurs moyens d'arriver au même résultat." },
-            { id: 58, text: "On reconnaît l'arbre à ses fruits.", exp: "C'est par ses actes qu'on évalue la valeur d'une personne." },
-            { id: 59, text: "Chacun voit midi à sa porte.", exp: "Chacun juge une situation selon son propre point de vue." },
-            { id: 60, text: "Chose promise, chose due.", exp: "Il faut toujours honorer ses engagements." },
-            { id: 61, text: "Il faut rendre à César ce qui est à César.", exp: "Il faut attribuer à chacun le mérite qui lui revient." },
-            { id: 62, text: "Le temps, c'est de l'argent.", exp: "Le temps est une ressource précieuse." },
-            { id: 63, text: "Les absents ont toujours tort.", exp: "Ceux qui ne sont pas là ne peuvent pas se défendre." },
-            { id: 64, text: "La vérité sort de la bouche des enfants.", exp: "Les enfants s'expriment en toute sincérité." },
-            { id: 65, text: "L'exception confirme la règle.", exp: "La présence d'un cas particulier montre qu'il existe une règle." },
-            { id: 66, text: "L'espoir fait vivre.", exp: "Garder espoir aide à traverser les moments difficiles." },
-            { id: 67, text: "Quand le vin est tiré, il faut le boire.", exp: "Quand une affaire est engagée, il faut aller jusqu'au bout." },
-            { id: 68, text: "Si jeunesse savait, si vieillesse pouvait.", exp: "Les jeunes manquent d'expérience et les anciens de forces." },
-            { id: 69, text: "Tout ce qui brille n'est pas or.", exp: "Les apparences séduisantes peuvent cacher de la fausseté." },
-            { id: 70, text: "Ventre affamé n'a pas d'oreilles.", exp: "Celui qui a faim écoute difficilement les discours." },
-            { id: 71, text: "Nul n'est censé ignorer la loi.", exp: "Chacun doit connaître ses devoirs dans la société." },
-            { id: 72, text: "C'est la goutte d'eau qui fait déborder le vase.", exp: "Un petit détail peut déclencher une grande colère." },
-            { id: 73, text: "Il vaut mieux faire envie que pitié.", exp: "Il est préférable d'avoir du succès." },
-            { id: 74, text: "Qui ne dit mot consent.", exp: "Garder le silence équivaut souvent à un accord." },
-            { id: 75, text: "Le soleil luit pour tout le monde.", exp: "Certaines ressources appartiennent à l'humanité." },
-            { id: 76, text: "À bon vin point d'enseigne.", exp: "Ce qui est de qualité n'a pas besoin de grande publicité." },
-            { id: 77, text: "Autre temps, autres mœurs.", exp: "Les coutumes évoluent avec les générations." },
-            { id: 78, text: "Bon sang ne saurait mentir.", exp: "On retrouve souvent les qualités ou défauts de sa famille." },
-            { id: 79, text: "Du choc des idées jaillit la lumière.", exp: "Échanger des points de vue enrichit la réflexion." },
-            { id: 80, text: "Il n'y a que le premier pas qui coûte.", exp: "Le plus difficile dans un projet est de commencer." },
-            { id: 81, text: "La fin justifie les moyens.", exp: "Certains excusent les méthodes si le résultat est important." },
-            { id: 82, text: "L'oisiveté est la mère de tous les vices.", exp: "Ne rien faire pousse à adopter de mauvais comportements." },
-            { id: 83, text: "Nul ne peut servir deux maîtres à la fois.", exp: "On ne peut pas être loyal à deux causes opposées." },
-            { id: 84, text: "Paris ne s'est pas fait en un jour.", exp: "Les grandes réalisations demandent de la patience." },
-            { id: 85, text: "Qui veut voyager loin ménage sa monture.", exp: "Il faut gérer ses forces pour tenir sur la durée." },
-            { id: 86, text: "Quand le bâtiment va, tout va.", exp: "L'activité économique générale dépend des grands secteurs." },
-            { id: 87, text: "Une hirondelle ne fait pas le printemps.", exp: "Un seul signe favorable ne suffit pas à tout confirmer." },
-            { id: 88, text: "Vouloir ignorer, c'est déjà savoir.", exp: "Refuser une vérité montre qu'on en a conscience." },
-            { id: 89, text: "Ce qui est fait n'est plus à faire.", exp: "Achever une tâche apporte du soulagement." },
-            { id: 90, text: "L'amour est aveugle.", exp: "Les sentiments empêchent souvent de voir les défauts." },
-            { id: 91, text: "La vengeance est un plat qui se mange froid.", exp: "Répondre à une offense demande du calme et du temps." },
-            { id: 92, text: "Mieux vaut plier que rompre.", exp: "Savoir s'adapter permet de traverser les crises." },
-            { id: 93, text: "Un clou chasse l'autre.", exp: "Une nouvelle idée ou personne en fait oublier une autre." },
-            { id: 94, text: "À l'impossible nul n'est tenu.", exp: "On ne peut pas exiger l'impossible." },
-            { id: 95, text: "Bien faire et laisser dire.", exp: "L'important est d'agir avec honnêteté sans écouter les critiques." },
-            { id: 96, text: "Il faut de tout pour faire un monde.", exp: "La diversité des personnalités est naturelle." },
-            { id: 97, text: "Le mieux est l'ennemi du bien.", exp: "À vouloir trop perfectionner, on risque de gâcher." },
-            { id: 98, text: "Nul n'est parfait.", exp: "Chacun possède des défauts ou des faiblesses." },
-            { id: 99, text: "Quand on parle du loup, on en voit la queue.", exp: "Se dit quand la personne dont on parlait arrive." },
-            { id: 100, text: "Rira bien qui rira le dernier.", exp: "Le véritable succès se mesure à la fin." }
+            { id: 1, text: "L'habit ne fait pas le moine.", exp: "Il ne faut pas juger une personne sur son apparence extérieure.", thought: "Aujourd'hui, je prends le temps de découvrir la richesse intérieure des gens qui m'entourent." },
+            { id: 2, text: "Qui va lentement arrive sûrement.", exp: "Prendre son temps garantit de mieux réussir ses entreprises.", thought: "Je respire et j'avance à mon propre rythme. Chaque petit pas me rapproche de mon objectif." },
+            { id: 3, text: "Après la pluie, le beau temps.", exp: "Les difficultés finissent toujours par laisser place à des jours meilleurs.", thought: "Peut importe les nuages d'aujourd'hui, le soleil finit toujours par briller à nouveau." },
+            { id: 4, text: "Pierre qui roule n'amasse pas mousse.", exp: "Changer trop souvent d'occupation ne permet pas de construire quelque chose de durable.", thought: "Je choisis un objectif important aujourd'hui et j'y consacre toute mon attention." },
+            { id: 5, text: "Chassez le naturel, il revient au galop.", exp: "On ne peut pas masquer sa vraie nature bien longtemps.", thought: "J'embrasse pleinement qui je suis aujourd'hui sans chercher à jouer un rôle." },
+            { id: 6, text: "Rien ne sert de courir, il faut partir à point.", exp: "La précipitation est inutile, la préparation compte davantage.", thought: "Je prends un moment pour planifier ma journée dans le calme et la sérénité." },
+            { id: 7, text: "Petit à petit, l'oiseau fait son nid.", exp: "C'est avec de la persévérance que l'on accomplit de grandes choses.", thought: "Je célèbre chaque petite victoire quotidienne, elles construisent mes grands succès de demain." },
+            { id: 8, text: "Quand le chat n'est pas là, les souris dansent.", exp: "En l'absence d'autorité, chacun profite pour agir à sa guise.", thought: "J'utilise ma liberté pour faire des choix qui me font du bien et me grandissent." },
+            { id: 9, text: "Vouloir, c'est pouvoir.", exp: "La volonté permet de surmonter la plupart des obstacles.", thought: "J'ai en moi toute la force et la détermination nécessaires pour concrétiser mes rêves." },
+            { id: 10, text: "Aux âmes bien nées, la valeur n'attend point le nombre des années.", exp: "Le talent ne dépend pas de l'âge.", thought: "Mon potentiel est immense, quel que soit mon âge ou mon expérience passée." },
+            { id: 11, text: "Goutte à goutte, l'eau creuse la pierre.", exp: "Avec de la patience, on vient à bout des plus grands obstacles.", thought: "Ma constance est ma plus grande force, rien ne résiste à une volonté patiente." },
+            { id: 12, text: "Les paroles s'envolent, les écrits restent.", exp: "Un engagement écrit a une valeur durable.", thought: "J'écris mes intentions positives d'aujourd'hui pour les ancrer dans la réalité." },
+            { id: 13, text: "On ne prête qu'aux riches.", exp: "On accorde plus facilement des faveurs à ceux qui ont déjà du succès.", thought: "Je cultive la gratitude pour mes richesses intérieures, elles attirent l'abondance." },
+            { id: 14, text: "Il n'y a pas de fumée sans feu.", exp: "Toute rumeur a souvent une part de vérité à son origine.", thought: "Je privilégie la clarté et la bienveillance dans toutes mes conversations." },
+            { id: 15, text: "À cœur vaillant rien d'impossible.", exp: "Avec du courage, on peut réussir n'importe quel défi.", thought: "J'aborde ce jour avec un cœur courageux et ouvert à toutes les belles possibilités." },
+            { id: 16, text: "Autant en emporte le vent.", exp: "Se dit des promesses qui sont rapidement oubliées.", thought: "Je laisse s'envoler les pensées négatives et ne garde que ce qui m'élève." },
+            { id: 17, text: "Qui sème le vent récolte la tempête.", exp: "Provoquer des désordres finit par se retourner contre soi.", thought: "Aujourd'hui, je sème la bienveillance et l'écoute autour de moi." },
+            { id: 18, text: "L'erreur est humaine, persévérer est diabolique.", exp: "Chacun peut se tromper, mais refuser de corriger ses fautes est grave.", thought: "J'accepte mes erreurs comme des leçons précieuses qui me font grandir." },
+            { id: 19, text: "Mieux vaut tard que jamais.", exp: "Il vaut mieux accomplir une action tardivement que de ne jamais la faire.", thought: "Il n'est jamais trop tard pour commencer un beau projet ou prendre soin de soi." },
+            { id: 20, text: "L'union fait la force.", exp: "En rassemblant nos efforts, nous sommes bien plus puissants.", thought: "Je cherche aujourd'hui à collaborer et à partager un moment chaleureux avec autrui." },
+            { id: 21, text: "Comme on fait son lit, on se couche.", exp: "On doit assumer les conséquences de ses propres actes.", thought: "Je crée dès ce matin un environnement harmonieux pour passer une excellente journée." },
+            { id: 22, text: "Il faut battre le fer tant qu'il est chaud.", exp: "Il faut saisir les opportunités dès qu'elles se présentent.", thought: "Je suis attentif aux opportunités d'aujourd'hui et j'agis avec enthousiasme." },
+            { id: 23, text: "Tout vient à point à qui sait attendre.", exp: "Avec de la patience, on obtient ce que l'on désire.", thought: "Je fais confiance au cours de la vie et j'accueille chaque moment avec paix." },
+            { id: 24, text: "Les murs ont des oreilles.", exp: "Il faut faire attention à ce que l'on dit discrètement.", thought: "Mes paroles sont calmes, motivantes et bienveillantes pour tous." },
+            { id: 25, text: "Prudence est mère de sûreté.", exp: "En faisant attention, on évite bien des désagréments.", thought: "Je prends soin de moi et de mes proches avec attention et douceur." },
+            { id: 26, text: "On ne fait pas d'omelette sans casser des œufs.", exp: "Pour obtenir des résultats, il faut accepter de faire des sacrifices.", thought: "Chaque effort investi aujourd'hui est un cadeau que je fais à mon avenir." },
+            { id: 27, text: "Tant va la cruche à l'eau qu'à la fin elle se casse.", exp: "À force de prendre des risques, on finit par subir un problème.", thought: "Je sais m'accorder des pauses quand mon corps ou mon esprit en expriment le besoin." },
+            { id: 28, text: "La nuit porte conseil.", exp: "Prendre du recul permet de prendre de meilleures décisions.", thought: "Je prends le temps de la réflexion avant d'agir, en toute sérénité." },
+            { id: 29, text: "Mieux vaut prévenir que guérir.", exp: "Il est préférable d'anticiper les problèmes.", thought: "Je prends soin de ma santé physique et mentale dès aujourd'hui." },
+            { id: 30, text: "Il ne faut pas vendre la peau de l'ours avant de l'avoir tué.", exp: "Ne considérez pas une chose acquise avant de l'avoir obtenue.", thought: "J'apprécie pleinement le moment présent sans me projeter anxieusement dans le futur." },
+            { id: 31, text: "Qui cherche trouve.", exp: "Avec des efforts, on finit par trouver des solutions.", thought: "Je garde l'esprit ouvert : il existe une solution créative à chaque défi." },
+            { id: 32, text: "Il vaut mieux être seul que mal accompagné.", exp: "La solitude est préférable à la mauvaise compagnie.", thought: "Je choisis d'entourer ma vie de personnes positives et inspirantes." },
+            { id: 33, text: "Les grands esprits se rencontrent.", exp: "Se dit quand deux personnes ont la même idée au même moment.", thought: "Je suis connecté aux autres par la pensée et par des valeurs partagées." },
+            { id: 34, text: "Chat échaudé craint l'eau froide.", exp: "Quand on a souffert d'une expérience, on devient méfiant.", thought: "Mes expériences passées me rendent plus fort et plus sage chaque jour." },
+            { id: 35, text: "C'est en forgeant qu'on devient forgeron.", exp: "La pratique régulière permet de maîtriser un savoir-faire.", thought: "Chaque entraînement développe mes talents et ma confiance en moi." },
+            { id: 36, text: "Abondance de biens ne nuit pas.", exp: "Avoir plus que nécessaire n'est pas un problème.", thought: "J'accueille la prospérité sous toutes ses formes dans ma vie quotidienne." },
+            { id: 37, text: "L'argent ne fait pas le bonheur.", exp: "La richesse matérielle ne suffit pas à garantir l'épanouissement.", thought: "Mon vrai bonheur réside dans la joie d'exister, d'aimer et de partager." },
+            { id: 38, text: "L'argent est un bon serviteur mais un mauvais maître.", exp: "L'argent doit vous aider, pas régir votre vie.", thought: "Je garde l'esprit serein et aligné avec mes vraies valeurs de vie." },
+            { id: 39, text: "À chaque jour suffit sa peine.", exp: "Il ne sert à rien de s'inquiéter à l'avance pour demain.", thought: "Aujourd'hui est un jour nouveau, plein de fraîcheur et d'opportunités." },
+            { id: 40, text: "Ce qui ne tue pas rend plus fort.", exp: "Les épreuves surmontées nous renforcent.", thought: "Chaque défi surmonté révèle ma résistance extraordinaire." },
+            { id: 41, text: "Avisé comme un singe, prudent comme un serpent.", exp: "Associer l'intelligence à la prudence évite les pièges.", thought: "J'associe la sagesse à l'action pour guider mes pas en toute liberté." },
+            { id: 42, text: "Bien mal acquis ne profite jamais.", exp: "Ce qui est obtenu par la tromperie ne porte pas bonheur.", thought: "L'honnêteté et l'intégrité me procurent une paix intérieure inestimable." },
+            { id: 43, text: "Chaque chose en son temps.", exp: "Il faut respecter l'ordre naturel sans tout précipiter.", thought: "Je fais confiance au rythme naturel des choses dans ma vie." },
+            { id: 44, text: "Des goûts et des couleurs, on ne discute pas.", exp: "Chacun a des préférences personnelles à respecter.", thought: "Je célèbre la diversité qui enrichit le monde autour de moi." },
+            { id: 45, text: "Il n'est pire sourd que celui qui ne veut pas entendre.", exp: "Il est impossible de convaincre quelqu'un qui refuse d'écouter.", thought: "J'offre une écoute sincère et attentive aux personnes que je croise." },
+            { id: 46, text: "Qui trop embrasse mal étreint.", exp: "Vouloir mener trop de projets empêche de les réussir.", thought: "Je me concentre sur ce qui compte vraiment et j'y prends du plaisir." },
+            { id: 47, text: "Il faut tourner sept fois sa langue dans sa bouche avant de parler.", exp: "Il convient de bien réfléchir avant de s'exprimer.", thought: "Mes paroles apportent du calme, du réconfort et de l'énergie positive." },
+            { id: 48, text: "L'appétit vient en mangeant.", exp: "L'intérêt pour une chose grandit au fur et à mesure.", thought: "En faisant le premier pas, je découvre le plaisir de la création." },
+            { id: 49, text: "Nul n'est prophète en son pays.", exp: "On est souvent moins reconnu par ses proches que par des inconnus.", thought: "Ma valeur est réelle, peu importe l'opinion immédiate des autres." },
+            { id: 50, text: "Qui paie ses dettes s'enrichit.", exp: "Se libérer de ses engagements donne la vraie tranquillité d'esprit.", thought: "La clarté et la légèreté guident mes actions de cette journée." },
+            { id: 51, text: "Quand on veut tuer son chien, on dit qu'il a la rage.", exp: "On trouve toujours de mauvais prétextes pour nuire.", thought: "Je choisis de voir le bon côté des situations et le meilleur chez chacun." },
+            { id: 52, text: "Un homme averti en vaut deux.", exp: "Être informé d'un danger permet de mieux s'y préparer.", thought: "La connaissance me donne la confiance d'avancer sereinement." },
+            { id: 53, text: "Les petits ruisseaux font les grandes rivières.", exp: "Les petits efforts accumulés donnent de grands résultats.", thought: "Chaque petite action accomplie aujourd'hui produit un grand bienfait." },
+            { id: 54, text: "Œil pour œil, dent pour dent.", exp: "Loi exigeant une punition égale au tort subi.", thought: "Je choisis le pardon et la paix d'esprit pour continuer mon chemin." },
+            { id: 55, text: "Qui aime bien châtie bien.", exp: "Être exigeant est parfois une preuve d'affection.", thought: "J'exprime mon affection de manière encourageante et chaleureuse." },
+            { id: 56, text: "Il ne faut pas mettre tous ses œufs dans le même panier.", exp: "Il faut diversifier ses risques.", thought: "Je multiplie mes sources de joie et d'inspiration au quotidien." },
+            { id: 57, text: "Toutes les routes mènent à Rome.", exp: "Il existe plusieurs moyens d'arriver au même résultat.", thought: "Il y a mille manières d'atteindre mes buts, je reste flexible et créatif." },
+            { id: 58, text: "On reconnaît l'arbre à ses fruits.", exp: "C'est par ses actes qu'on évalue la valeur d'une personne.", thought: "Mes actions bienveillantes portent de beaux fruits autour de moi." },
+            { id: 59, text: "Chacun voit midi à sa porte.", exp: "Chacun juge une situation selon son propre point de vue.", thought: "J'accueille la différence d'opinion comme une source d'apprentissage." },
+            { id: 60, text: "Chose promise, chose due.", exp: "Il faut toujours honorer ses engagements.", thought: "Je suis fier d'être une personne fiable et digne de confiance." },
+            { id: 61, text: "Il faut rendre à César ce qui est à César.", exp: "Il faut attribuer à chacun le mérite qui lui revient.", thought: "Je reconnais sincèrement le travail et la beauté des efforts d'autrui." },
+            { id: 62, text: "Le temps, c'est de l'argent.", exp: "Le temps est une ressource précieuse.", thought: "Mon temps est précieux, je choisis de l'investir dans ce qui me rend heureux." },
+            { id: 63, text: "Les absents ont toujours tort.", exp: "Ceux qui ne sont pas là ne peuvent pas se défendre.", thought: "Je suis présent à ma propre vie et engagé dans mon bonheur." },
+            { id: 64, text: "La vérité sort de la bouche des enfants.", exp: "Les enfants s'expriment en toute sincérité.", thought: "Je retrouve aujourd'hui l'émerveillement et la simplicité de l'enfance." },
+            { id: 65, text: "L'exception confirme la règle.", exp: "La présence d'un cas particulier montre qu'il existe une règle.", thought: "Je reste ouvert aux surprises fabuleuses que la vie m'offre aujourd'hui." },
+            { id: 66, text: "L'espoir fait vivre.", exp: "Garder espoir aide à traverser les moments difficiles.", thought: "L'espoir illumine mon esprit et m'ouvre les portes d'un brillant avenir." },
+            { id: 67, text: "Quand le vin est tiré, il faut le boire.", exp: "Quand une affaire est engagée, il faut aller jusqu'au bout.", thought: "Je m'engage pleinement dans mes projets avec enthousiasme." },
+            { id: 68, text: "Si jeunesse savait, si vieillesse pouvait.", exp: "Les jeunes manquent d'expérience et les anciens de forces.", thought: "J'associe l'enthousiasme à l'expérience pour vivre une belle journée." },
+            { id: 69, text: "Tout ce qui brille n'est pas or.", exp: "Les apparences séduisantes peuvent cacher de la fausseté.", thought: "Je cherche la beauté authentique et simple dans chaque chose." },
+            { id: 70, text: "Ventre affamé n'a pas d'oreilles.", exp: "Celui qui a faim écoute difficilement les discours.", thought: "Je prends soin de nourrir mon corps et mon esprit avec bienveillance." },
+            { id: 71, text: "Nul n'est censé ignorer la loi.", exp: "Chacun doit connaître ses devoirs dans la société.", thought: "Je contribue activement au bien-être de ma communauté." },
+            { id: 72, text: "C'est la goutte d'eau qui fait déborder le vase.", exp: "Un petit détail peut déclencher une grande colère.", thought: "Je libère mes tensions avec douceur avant qu'elles ne s'accumulent." },
+            { id: 73, text: "Il vaut mieux faire envie que pitié.", exp: "Il est préférable d'avoir du succès.", thought: "Je rayonne de positivité et j'inspire les gens autour de moi." },
+            { id: 74, text: "Qui ne dit mot consent.", exp: "Garder le silence équivaut souvent à un accord.", thought: "J'exprime mes idées et mes émotions avec clarté et respect." },
+            { id: 75, text: "Le soleil luit pour tout le monde.", exp: "Certaines ressources appartiennent à l'humanité.", thought: "La vie est généreuse, il y a de la joie disponible pour chacun d'entre nous." },
+            { id: 76, text: "À bon vin point d'enseigne.", exp: "Ce qui est de qualité n'a pas besoin de grande publicité.", thought: "La qualité de mes actions et de mon cœur parle d'elle-même." },
+            { id: 77, text: "Autre temps, autres mœurs.", exp: "Les coutumes évoluent avec les générations.", thought: "J'embrasse le changement avec curiosité et ouverture d'esprit." },
+            { id: 78, text: "Bon sang ne saurait mentir.", exp: "On retrouve souvent les qualités ou défauts de sa famille.", thought: "Je transmets le meilleur de moi-même à mon entourage." },
+            { id: 79, text: "Du choc des idées jaillit la lumière.", exp: "Échanger des points de vue enrichit la réflexion.", thought: "Chaque échange m'enrichit et élargit mon horizon." },
+            { id: 80, text: "Il n'y a que le premier pas qui coûte.", exp: "Le plus difficile dans un projet est de commencer.", thought: "Je me lance aujourd'hui avec confiance, le chemin se révélera pas à pas." },
+            { id: 81, text: "La fin justifie les moyens.", exp: "Certains excusent les méthodes si le résultat est important.", thought: "Je choisis des moyens éthiques et alignés avec mon cœur pour réussir." },
+            { id: 82, text: "L'oisiveté est la mère de tous les vices.", exp: "Ne rien faire pousse à adopter de mauvais comportements.", thought: "J'occupe ma journée avec des activités stimulantes et enrichissantes." },
+            { id: 83, text: "Nul ne peut servir deux maîtres à la fois.", exp: "On ne peut pas être loyal à deux causes opposées.", thought: "Je suis fidèle à mes valeurs et à ce qui me tient véritablement à cœur." },
+            { id: 84, text: "Paris ne s'est pas fait en un jour.", exp: "Les grandes réalisations demandent de la patience.", thought: "Je construis mon avenir patiemment, pierre par pierre." },
+            { id: 85, text: "Qui veut voyager loin ménage sa monture.", exp: "Il faut gérer ses forces pour tenir sur la durée.", thought: "Je préserve mon énergie et j'accorde de l'importance à mon repos." },
+            { id: 86, text: "Quand le bâtiment va, tout va.", exp: "L'activité économique générale dépend des grands secteurs.", thought: "En renforçant mes fondations intérieures, tout le reste s'harmonise." },
+            { id: 87, text: "Une hirondelle ne fait pas le printemps.", exp: "Un seul signe favorable ne suffit pas à tout confirmer.", thought: "Je garde mon enthousiasme tout en observant la réalité avec clarté." },
+            { id: 88, text: "Vouloir ignorer, c'est déjà savoir.", exp: "Refuser une vérité montre qu'on en a conscience.", thought: "J'accueille la vérité avec courage, elle me rend libre." },
+            { id: 89, text: "Ce qui est fait n'est plus à faire.", exp: "Achever une tâche apporte du soulagement.", thought: "Quel soulagement et quelle satisfaction de finaliser mes tâches !" },
+            { id: 90, text: "L'amour est aveugle.", exp: "Les sentiments empêchent souvent de voir les défauts.", thought: "L'amour m'incite à voir le meilleur et la bonté en chaque être." },
+            { id: 91, text: "La vengeance est un plat qui se mange froid.", exp: "Répondre à une offense demande du calme et du temps.", thought: "Je préfère investir mon énergie dans ce qui me rend heureux." },
+            { id: 92, text: "Mieux vaut plier que rompre.", exp: "Savoir s'adapter permet de traverser les crises.", thought: "Ma souplesse d'esprit est ma plus grande protection face aux imprévus." },
+            { id: 93, text: "Un clou chasse l'autre.", exp: "Une nouvelle idée ou personne en fait oublier une autre.", thought: "Je laisse la place au renouveau et aux belles surprises dans ma vie." },
+            { id: 94, text: "À l'impossible nul n'est tenu.", exp: "On ne peut pas exiger l'impossible.", thought: "Faire de mon mieux est amplement suffisant, je suis en paix avec moi-même." },
+            { id: 95, text: "Bien faire et laisser dire.", exp: "L'important est d'agir avec honnêteté sans écouter les critiques.", thought: "Je reste fidèle à ma conscience, elle est ma meilleure boussole." },
+            { id: 96, text: "Il faut de tout pour faire un monde.", exp: "La diversité des personnalités est naturelle.", thought: "J'accepte chacun tel qu'il est, avec indulgence et sourire." },
+            { id: 97, text: "Le mieux est l'ennemi du bien.", exp: "À vouloir trop perfectionner, on risque de gâcher.", thought: "J'apprécie la simplicité des choses faites avec le cœur." },
+            { id: 98, text: "Nul n'est parfait.", exp: "Chacun possède des défauts ou des faiblesses.", thought: "J'aime mes imperfections, elles font ma singularité et mon charme." },
+            { id: 99, text: "Quand on parle du loup, on en voit la queue.", exp: "Se dit quand la personne dont on parlait arrive.", thought: "Mes pensées positives attirent de joyeuses coïncidences dans ma vie." },
+            { id: 100, text: "Rira bien qui rira le dernier.", exp: "Le véritable succès se mesure à la fin.", thought: "Je garde confiance en mes rêves, la persévérance porte toujours ses fruits." }
         ];
 
         let currentProverb = null;
@@ -286,6 +308,7 @@
             currentProverb = p;
             document.getElementById('proverb').textContent = "« " + p.text + " »";
             document.getElementById('explanation').textContent = p.exp;
+            document.getElementById('thought').textContent = p.thought;
             
             const options = { weekday: 'long', day: 'numeric', month: 'long' };
             document.getElementById('date').textContent = new Date().toLocaleDateString('fr-FR', options);
@@ -299,7 +322,8 @@
         function speakProverb() {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(currentProverb.text + ". " + currentProverb.exp);
+                const textToSpeak = currentProverb.text + ". " + currentProverb.exp + " Pensée positive : " + currentProverb.thought;
+                const utterance = new SpeechSynthesisUtterance(textToSpeak);
                 utterance.lang = 'fr-FR';
                 window.speechSynthesis.speak(utterance);
             } else {
@@ -308,12 +332,12 @@
         }
 
         function shareProverb() {
-            const textToShare = "« " + currentProverb.text + " » - " + currentProverb.exp;
+            const textToShare = "« " + currentProverb.text + " »\n\nExplication : " + currentProverb.exp + "\n\nPensée positive : " + currentProverb.thought;
             if (navigator.share) {
                 navigator.share({ title: 'Proverbe du Jour', text: textToShare, url: window.location.href });
             } else {
                 navigator.clipboard.writeText(textToShare);
-                alert('Proverbe copié dans votre presse-papier !');
+                alert('Proverbe et pensée positive copiés dans le presse-papier !');
             }
         }
 
