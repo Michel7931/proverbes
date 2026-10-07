@@ -4,24 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Proverbe du Jour</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- FontAwesome icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- html2canvas for canvas image rendering -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
     <style>
         :root {
-            --bg-dark: #0f172a;
-            --gold-primary: #fbbf24;
-            --gold-glow: rgba(251, 191, 36, 0.4);
-            --emerald-accent: #34d399;
-            --emerald-glow: rgba(52, 211, 153, 0.3);
-            --text-main: #ffffff;
-            --text-muted: #cbd5e1;
-            --glass-bg: rgba(15, 23, 42, 0.72);
-            --glass-border: rgba(255, 255, 255, 0.18);
+            --bg-color: #0f172a;
+            --card-bg: rgba(15, 23, 42, 0.75);
+            --accent-gold: #f59e0b;
+            --accent-green: #34d399;
+            --text-light: #f8fafc;
+            --text-dim: #cbd5e1;
         }
 
         * {
@@ -29,51 +21,37 @@
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px 15px;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Dynamic Background Layer */
-        .bg-layer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            background-color: var(--bg-color);
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
             transition: background-image 0.8s ease-in-out;
-            z-index: -2;
+            position: relative;
         }
 
-        .bg-overlay {
+        body::before {
+            content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.88) 100%);
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.65);
             backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: -1;
+            z-index: 0;
         }
 
         .container {
             width: 100%;
-            max-width: 520px;
+            max-width: 500px;
+            position: relative;
             z-index: 1;
         }
 
@@ -82,16 +60,9 @@
             margin-bottom: 20px;
         }
 
-        .logo-icon {
-            font-size: 2.2rem;
-            color: var(--gold-primary);
-            margin-bottom: 6px;
-            filter: drop-shadow(0 0 12px var(--gold-glow));
-        }
-
         h1 {
             font-family: 'Cinzel', serif;
-            color: var(--gold-primary);
+            color: var(--accent-gold);
             font-size: 2rem;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -99,496 +70,283 @@
         }
 
         .subtitle {
-            color: var(--text-muted);
+            color: var(--text-dim);
             font-size: 0.9rem;
             margin-top: 4px;
-            font-weight: 300;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+            text-shadow: 0 1px 5px rgba(0,0,0,0.8);
         }
 
+        /* Barre de recherche */
         .search-container {
             position: relative;
             margin-bottom: 20px;
         }
 
-        .search-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 16px;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
         .search-input {
             width: 100%;
-            padding: 13px 16px 13px 45px;
-            border-radius: 14px;
-            border: 1px solid var(--glass-border);
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            color: var(--text-main);
-            font-size: 0.92rem;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(15, 23, 42, 0.85);
+            color: var(--text-light);
+            font-size: 0.9rem;
             outline: none;
+            backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
 
         .search-input:focus {
-            border-color: var(--gold-primary);
-            box-shadow: 0 0 15px var(--gold-glow);
-            background: rgba(15, 23, 42, 0.9);
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
         }
 
         .search-results {
             position: absolute;
-            top: calc(100% + 6px);
+            top: 100%;
             left: 0;
             right: 0;
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid rgba(251, 191, 36, 0.4);
-            border-radius: 14px;
+            background: #1e293b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 12px;
             max-height: 220px;
             overflow-y: auto;
             z-index: 100;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.8);
+            margin-top: 5px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.7);
             display: none;
         }
 
         .search-item {
-            padding: 12px 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             cursor: pointer;
-            font-size: 0.88rem;
-            transition: background 0.2s;
+            font-size: 0.85rem;
             text-align: left;
         }
 
         .search-item:hover {
-            background: rgba(251, 191, 36, 0.18);
-            color: var(--gold-primary);
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--accent-gold);
         }
 
-        .search-item-theme {
-            display: inline-block;
-            font-size: 0.75rem;
-            color: var(--emerald-accent);
-            margin-right: 6px;
-            font-weight: 600;
-        }
-
+        /* Carte principale */
         .card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 30px 22px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.2);
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 30px 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             text-align: center;
             position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--gold-primary), var(--emerald-accent));
         }
 
         .badge-group {
             display: flex;
             justify-content: center;
-            align-items: center;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .date-badge {
-            background: rgba(251, 191, 36, 0.15);
-            color: var(--gold-primary);
-            border: 1px solid rgba(251, 191, 36, 0.3);
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-gold);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(245, 158, 11, 0.3);
         }
 
         .theme-badge {
             background: rgba(52, 211, 153, 0.15);
-            color: var(--emerald-accent);
+            color: var(--accent-green);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
             border: 1px solid rgba(52, 211, 153, 0.3);
         }
 
-        .proverb-quote {
+        .proverb-text {
             font-family: 'Cinzel', serif;
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             line-height: 1.6;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
             color: #ffffff;
-            font-weight: 700;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
         }
 
         .info-box {
             font-size: 0.9rem;
-            color: #e2e8f0;
-            line-height: 1.6;
-            background: rgba(15, 23, 42, 0.7);
+            color: var(--text-dim);
+            line-height: 1.5;
+            background: rgba(15, 23, 42, 0.65);
             padding: 15px;
-            border-radius: 14px;
+            border-radius: 12px;
             text-align: left;
             margin-bottom: 14px;
-            border-left: 4px solid transparent;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
-        .explanation { border-left-color: var(--gold-primary); }
-        .positive-thought { border-left-color: var(--emerald-accent); margin-bottom: 24px; }
+        .explanation {
+            border-left: 3px solid var(--accent-gold);
+        }
+
+        .positive-thought {
+            border-left: 3px solid var(--accent-green);
+            margin-bottom: 24px;
+        }
 
         .info-box strong {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 6px;
+            display: block;
+            margin-bottom: 4px;
             font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        .explanation strong { color: var(--gold-primary); }
-        .positive-thought strong { color: var(--emerald-accent); }
+        .explanation strong {
+            color: var(--accent-gold);
+        }
 
-        .btn-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+        .positive-thought strong {
+            color: var(--accent-green);
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
             gap: 10px;
+            justify-content: center;
         }
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 14px;
+        button {
+            flex: 1 1 calc(50% - 5px);
+            padding: 12px;
+            border: none;
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.08);
-            color: var(--text-main);
+            color: var(--text-light);
             font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.25s ease;
-            border: 1px solid var(--glass-border);
-            outline: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        .btn:hover {
-            background: var(--gold-primary);
-            color: #0f172a;
-            border-color: var(--gold-primary);
-            box-shadow: 0 4px 15px var(--gold-glow);
+        button:hover {
+            background: var(--accent-gold);
+            color: #000;
             transform: translateY(-2px);
-        }
-
-        .btn:active { transform: translateY(0); }
-
-        #exportCardHidden {
-            position: absolute;
-            left: -9999px;
-            top: -9999px;
-            width: 1080px;
-            height: 1920px;
-            box-sizing: border-box;
-            padding: 100px 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .export-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, rgba(15,23,42,0.7) 0%, rgba(15,23,42,0.85) 50%, rgba(15,23,42,0.92) 100%);
-            z-index: 1;
-        }
-
-        .export-content {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            text-align: center;
-        }
-
-        .export-header {
-            margin-top: 40px;
-        }
-
-        .export-logo {
-            font-size: 70px;
-            color: #fbbf24;
-            margin-bottom: 20px;
-        }
-
-        .export-title {
-            font-family: 'Cinzel', serif;
-            font-size: 58px;
-            color: #fbbf24;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-        }
-
-        .export-date {
-            font-size: 32px;
-            color: #cbd5e1;
-            margin-top: 10px;
-        }
-
-        .export-main {
-            background: rgba(15, 23, 42, 0.75);
-            border: 2px solid rgba(251, 191, 36, 0.4);
-            border-radius: 40px;
-            padding: 70px 60px;
-            width: 100%;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
-            backdrop-filter: blur(20px);
-        }
-
-        .export-theme {
-            display: inline-block;
-            background: rgba(52, 211, 153, 0.2);
-            color: #34d399;
-            border: 2px solid rgba(52, 211, 153, 0.4);
-            padding: 10px 30px;
-            border-radius: 30px;
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 40px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .export-quote {
-            font-family: 'Cinzel', serif;
-            font-size: 54px;
-            line-height: 1.5;
-            color: #ffffff;
-            font-weight: 700;
-            margin-bottom: 50px;
-        }
-
-        .export-box {
-            font-size: 32px;
-            line-height: 1.6;
-            background: rgba(15, 23, 42, 0.85);
-            padding: 35px;
-            border-radius: 24px;
-            text-align: left;
-            margin-bottom: 30px;
-        }
-
-        .export-box-exp { border-left: 8px solid #fbbf24; }
-        .export-box-thought { border-left: 8px solid #34d399; }
-
-        .export-box-title {
-            font-size: 26px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 12px;
-        }
-
-        .export-footer {
-            margin-bottom: 40px;
-            font-size: 28px;
-            color: #94a3b8;
-            letter-spacing: 2px;
-        }
-
-        /* Toast Notifications */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: #1e293b;
-            color: var(--gold-primary);
-            border: 1px solid var(--gold-primary);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-size: 0.88rem;
-            font-weight: 500;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-            opacity: 0;
-            transition: all 0.4s ease;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
         }
 
         footer {
             text-align: center;
             margin-top: 20px;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+            color: var(--text-dim);
+            font-size: 0.75rem;
         }
 
-        @media (max-width: 480px) {
-            h1 { font-size: 1.7rem; }
-            .proverb-quote { font-size: 1.25rem; }
-            .card { padding: 24px 16px; }
-            .btn { font-size: 0.8rem; padding: 10px; }
+        /* Carte cachée pour le téléchargement d'image HD */
+        #hiddenCard {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            width: 800px;
+            padding: 60px 50px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 0px;
+            color: #fff;
+            box-sizing: border-box;
+        }
+
+        .hidden-overlay {
+            background: rgba(15, 23, 42, 0.85);
+            padding: 50px;
+            border-radius: 24px;
+            border: 2px solid rgba(245, 158, 11, 0.4);
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <!-- Dynamic Background Layer -->
-    <div id="bgLayer" class="bg-layer"></div>
-    <div class="bg-overlay"></div>
-
     <div class="container">
         <header>
-            <div class="logo-icon"><i class="fa-solid fa-book-open-reader"></i></div>
             <h1>Le Proverbe du Jour</h1>
-            <p class="subtitle">Sagesse & Sérénité au quotidien</p>
+            <p class="subtitle">Sagesse & Pensées au quotidien</p>
         </header>
 
+        <!-- Recherche -->
         <div class="search-container">
-            <div class="search-wrapper">
-                <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                <input type="text" id="searchInput" class="search-input" placeholder="Rechercher un proverbe, un thème..." onkeyup="searchProverb()">
-            </div>
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Rechercher un proverbe, thème..." onkeyup="searchProverb()">
             <div id="searchResults" class="search-results"></div>
         </div>
 
-        <div class="card" id="cardMain">
+        <!-- Carte principale -->
+        <div class="card">
             <div class="badge-group">
-                <span class="badge date-badge"><i class="fa-regular fa-calendar"></i> <span id="date">--</span></span>
-                <span class="badge theme-badge"><i class="fa-solid fa-tag"></i> <span id="theme">--</span></span>
+                <span class="date-badge" id="date">--</span>
+                <span class="theme-badge" id="theme">--</span>
             </div>
-            
-            <div class="proverb-quote" id="proverb">Chargement...</div>
+            <div class="proverb-text" id="proverb">Chargement...</div>
             
             <div class="info-box explanation">
-                <strong><i class="fa-solid fa-lightbulb"></i> Explication</strong>
+                <strong>Explication</strong>
                 <span id="explanation">...</span>
             </div>
 
             <div class="info-box positive-thought">
-                <strong><i class="fa-solid fa-seedling"></i> Pensée Positive</strong>
+                <strong>🌱 Pensée Positive</strong>
                 <span id="thought">...</span>
             </div>
 
-            <div class="btn-grid">
-                <button class="btn" onclick="speakProverb()"><i class="fa-solid fa-volume-high"></i> Écouter</button>
-                <button class="btn" onclick="shareProverb()"><i class="fa-solid fa-share-nodes"></i> Partager</button>
-                <button class="btn" onclick="changeBackgroundImage()"><i class="fa-solid fa-arrows-rotate"></i> Changer image</button>
-                <button class="btn" onclick="downloadHDImage()"><i class="fa-solid fa-image"></i> Carte image</button>
-                <button class="btn btn-full" onclick="getRandomProverb()" style="grid-column: span 2;"><i class="fa-solid fa-dice"></i> Un autre proverbe</button>
+            <div class="btn-group">
+                <button onclick="speakProverb()">🔊 Écouter</button>
+                <button onclick="shareProverb()">📲 Partager</button>
+                <button onclick="downloadImage()">🖼️ Image HD</button>
+                <button onclick="getRandomProverb()">🎲 Un autre</button>
             </div>
         </div>
 
         <footer>
-            © Le Proverbe du Jour • Sagesse populaire & Méditation
+            Proverbe du Jour • 100 Proverbes & Inspirations
         </footer>
     </div>
 
-    <div id="exportCardHidden">
-        <div class="export-overlay"></div>
-        <div class="export-content">
-            <div class="export-header">
-                <div class="export-logo"><i class="fa-solid fa-book-open-reader"></i></div>
-                <div class="export-title">Le Proverbe du Jour</div>
-                <div class="export-date" id="exportDate">--</div>
+    <!-- Element masqué servant à générer la carte image haute définition -->
+    <div id="hiddenCard">
+        <div class="hidden-overlay">
+            <div style="color: #f59e0b; font-size: 1.2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 10px;" id="hiddenTheme">THÈME</div>
+            <div style="font-family: 'Cinzel', serif; font-size: 2.2rem; line-height: 1.5; margin-bottom: 30px; color: #ffffff;" id="hiddenProverb">« »</div>
+            <div style="background: rgba(15, 23, 42, 0.7); padding: 20px; border-radius: 16px; border-left: 4px solid #f59e0b; margin-bottom: 20px; text-align: left; font-size: 1.1rem; color: #e2e8f0;">
+                <strong style="color: #f59e0b; display: block; margin-bottom: 6px; font-size: 0.9rem;">EXPLICATION</strong>
+                <span id="hiddenExp"></span>
             </div>
-
-            <div class="export-main">
-                <div class="export-theme" id="exportTheme">THÈME</div>
-                <div class="export-quote" id="exportProverb">« ... »</div>
-                
-                <div class="export-box export-box-exp">
-                    <div class="export-box-title" style="color: #fbbf24;">💡 Explication</div>
-                    <div id="exportExp" style="color: #f8fafc;">...</div>
-                </div>
-
-                <div class="export-box export-box-thought">
-                    <div class="export-box-title" style="color: #34d399;">🌱 Pensée Positive</div>
-                    <div id="exportThought" style="color: #f8fafc;">...</div>
-                </div>
+            <div style="background: rgba(15, 23, 42, 0.7); padding: 20px; border-radius: 16px; border-left: 4px solid #34d399; text-align: left; font-size: 1.1rem; color: #e2e8f0;">
+                <strong style="color: #34d399; display: block; margin-bottom: 6px; font-size: 0.9rem;">🌱 PENSÉE POSITIVE</strong>
+                <span id="hiddenThought"></span>
             </div>
-
-            <div class="export-footer">
-                Sagesse & Méditation Quotidienne
-            </div>
+            <div style="margin-top: 30px; font-size: 0.9rem; color: #94a3b8; font-style: italic;">Le Proverbe du Jour</div>
         </div>
     </div>
 
-    <div id="toast" class="toast"><i class="fa-solid fa-circle-check"></i> <span id="toastMsg">Action effectuée !</span></div>
-
     <script>
-        // Proverb Dataset
         const proverbs = [
-            { id: 1, theme: "Apparence", tag: "nature", text: "L'habit ne fait pas le moine.", exp: "Il ne faut pas juger une personne sur son apparence extérieure.", thought: "Aujourd'hui, je prends le temps de découvrir la richesse intérieure des gens qui m'entourent." },
-            { id: 2, theme: "Patience", tag: "patience", text: "Qui va lentement arrive sûrement.", exp: "Prendre son temps garantit de mieux réussir ses entreprises.", thought: "Je respire et j'avance à mon propre rythme. Chaque petit pas me rapproche de mon objectif." },
-            { id: 3, theme: "Espoir", tag: "light", text: "Après la pluie, le beau temps.", exp: "Les difficultés finissent toujours par laisser place à des jours meilleurs.", thought: "Peu importe les nuages d'aujourd'hui, le soleil finit toujours par briller à nouveau." },
-            { id: 4, theme: "Constance", tag: "mountain", text: "Pierre qui roule n'amasse pas mousse.", exp: "Changer trop souvent d'occupation ne permet pas de construire quelque chose de durable.", thought: "Je choisis un objectif important aujourd'hui et j'y consacre toute mon attention." },
-            { id: 5, theme: "Authenticité", tag: "forest", text: "Chassez le naturel, il revient au galop.", exp: "On ne peut pas masquer sa vraie nature bien longtemps.", thought: "J'embrasse pleinement qui je suis aujourd'hui sans chercher à jouer un rôle." },
-            { id: 6, theme: "Préparation", tag: "time", text: "Rien ne sert de courir, il faut partir à point.", exp: "La précipitation est inutile, la préparation compte davantage.", thought: "Je prends un moment pour planifier ma journée dans le calme et la sérénité." },
-            { id: 7, theme: "Persévérance", tag: "strength", text: "Petit à petit, l'oiseau fait son nid.", exp: "C'est avec de la persévérance que l'on accomplit de grandes choses.", thought: "Je célèbre chaque petite victoire quotidienne, elles construisent mes grands succès." },
-            { id: 8, theme: "Volonté", tag: "space", text: "Vouloir, c'est pouvoir.", exp: "La volonté permet de surmonter la plupart des obstacles.", thought: "J'ai en moi toute la force et la détermination nécessaires pour concrétiser mes rêves." },
-            { id: 9, theme: "Talent", tag: "wisdom", text: "Aux âmes bien nées, la valeur n'attend point le nombre des années.", exp: "Le talent ne dépend pas de l'âge.", thought: "Mon potentiel est immense, quel que soit mon âge ou mon expérience passée." },
-            { id: 10, theme: "Courage", tag: "ocean", text: "À cœur vaillant rien d'impossible.", exp: "Avec du courage, on peut réussir n'importe quel défi.", thought: "J'aborde ce jour avec un cœur courageux et ouvert à toutes les belles possibilités." },
-            { id: 11, theme: "Actions", tag: "nature", text: "Qui sème le vent récolte la tempête.", exp: "Provoquer des désordres finit par se retourner contre soi.", thought: "Aujourd'hui, je sème la bienveillance et l'écoute autour de moi." },
-            { id: 12, theme: "Sagesse", tag: "wisdom", text: "L'erreur est humaine, persévérer est diabolique.", exp: "Chacun peut se tromper, mais refuser de corriger ses fautes est une faute.", thought: "J'accepte mes erreurs comme des leçons précieuses qui me font grandir." },
-            { id: 13, theme: "Optimisme", tag: "light", text: "Mieux vaut tard que jamais.", exp: "Il vaut mieux accomplir une action tardivement que de ne jamais la faire.", thought: "Il n'est jamais trop tard pour commencer un beau projet ou prendre soin de soi." },
-            { id: 14, theme: "Entraide", tag: "forest", text: "L'union fait la force.", exp: "En rassemblant nos efforts, nous sommes bien plus puissants.", thought: "Je cherche aujourd'hui à collaborer et à partager un moment chaleureux avec autrui." },
-            { id: 15, theme: "Opportunité", tag: "time", text: "Il faut battre le fer tant qu'il est chaud.", exp: "Il faut saisir les opportunités dès qu'elles se présentent.", thought: "Je suis attentif aux opportunités d'aujourd'hui et j'agis avec enthousiasme." },
-            { id: 16, theme: "Sérénité", tag: "ocean", text: "Tout vient à point à qui sait attendre.", exp: "Avec de la patience, on obtient ce que l'on désire.", thought: "Je fais confiance au cours de la vie et j'accueille chaque moment avec paix." },
-            { id: 17, theme: "Prudence", tag: "mountain", text: "Prudence est mère de sûreté.", exp: "En faisant attention, on évite bien des désagréments.", thought: "Je prends soin de moi et de mes proches avec attention et douceur." },
-            { id: 18, theme: "Santé", tag: "nature", text: "Mieux vaut prévenir que guérir.", exp: "Il est préférable d'anticiper les problèmes.", thought: "Je prends soin de ma santé physique et mentale dès aujourd'hui." },
-            { id: 19, theme: "Pratique", tag: "strength", text: "C'est en forgeant qu'on devient forgeron.", exp: "La pratique régulière permet de maîtriser un savoir-faire.", thought: "Chaque entraînement développe mes talents et ma confiance en moi." },
-            { id: 20, theme: "Présent", tag: "light", text: "À chaque jour suffit sa peine.", exp: "Il ne sert à rien de s'inquiéter à l'avance pour demain.", thought: "Aujourd'hui est un jour nouveau, plein de fraîcheur et d'opportunités." }
+            { id: 1, theme: "Apparence", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80", text: "L'habit ne fait pas le moine.", exp: "Il ne faut pas juger une personne sur son apparence extérieure.", thought: "Aujourd'hui, je prends le temps de découvrir la richesse intérieure des gens qui m'entourent." },
+            { id: 2, theme: "Patience", img: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80", text: "Qui va lentement arrive sûrement.", exp: "Prendre son temps garantit de mieux réussir ses entreprises.", thought: "Je respire et j'avance à mon propre rythme. Chaque petit pas me rapproche de mon objectif." },
+            { id: 3, theme: "Espoir", img: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80", text: "Après la pluie, le beau temps.", exp: "Les difficultés finissent toujours par laisser place à des jours meilleurs.", thought: "Peu importe les nuages d'aujourd'hui, le soleil finit toujours par briller à nouveau." },
+            { id: 4, theme: "Constance", img: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80", text: "Pierre qui roule n'amasse pas mousse.", exp: "Changer trop souvent d'occupation ne permet pas de construire quelque chose de durable.", thought: "Je choisis un objectif important aujourd'hui et j'y consacre toute mon attention." },
+            { id: 5, theme: "Authenticité", img: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80", text: "Chassez le naturel, il revient au galop.", exp: "On ne peut pas masquer sa vraie nature bien longtemps.", thought: "J'embrasse pleinement qui je suis aujourd'hui sans chercher à jouer un rôle." },
+            { id: 6, theme: "Préparation", img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80", text: "Rien ne sert de courir, il faut partir à point.", exp: "La précipitation est inutile, la préparation compte davantage.", thought: "Je prends un moment pour planifier ma journée dans le calme et la sérénité." },
+            { id: 7, theme: "Persévérance", img: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80", text: "Petit à petit, l'oiseau fait son nid.", exp: "C'est avec de la persévérance que l'on accomplit de grandes choses.", thought: "Je célèbre chaque petite victoire quotidienne, elles construisent mes grands succès." },
+            { id: 8, theme: "Liberté", img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80", text: "Quand le chat n'est pas là, les souris dansent.", exp: "En l'absence d'autorité, chacun profite pour agir à sa guise.", thought: "J'utilise ma liberté pour faire des choix qui me font du bien et me grandissent." },
+            { id: 9, theme: "Volonté", img: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80", text: "Vouloir, c'est pouvoir.", exp: "La volonté permet de surmonter la plupart des obstacles.", thought: "J'ai en moi toute la force et la détermination nécessaires pour concrétiser mes rêves." },
+            { id: 10, theme: "Talent", img: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=1200&q=80", text: "Aux âmes bien nées, la valeur n'attend point le nombre des années.", exp: "Le talent ne dépend pas de l'âge.", thought: "Mon potentiel est immense, quel que soit mon âge ou mon expérience passée." }
         ];
 
         let currentProverb = null;
-        let imageSeed = 1;
-        let currentBgUrl = '';
 
-        // Get daily proverb
         function getProverbOfDay() {
             const today = new Date();
             const start = new Date(today.getFullYear(), 0, 0);
@@ -598,15 +356,12 @@
             return proverbs[dayOfYear % proverbs.length];
         }
 
-        // Generate thematic HD image URL from Picsum / Unsplash keyword proxy
-        function getThematicImageUrl(tag, seed) {
-            return `https://picsum.photos/seed/${tag}-${seed}/1200/1600`;
-        }
-
-        // Display Proverb and update thematic background
         function displayProverb(p) {
             currentProverb = p;
-            imageSeed = Math.floor(Math.random() * 100) + 1;
+            
+            // Mise à jour de l'image de fond du body
+            const bgUrl = p.img || "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80";
+            document.body.style.backgroundImage = `url('${bgUrl}')`;
 
             document.getElementById('proverb').textContent = "« " + p.text + " »";
             document.getElementById('explanation').textContent = p.exp;
@@ -614,112 +369,64 @@
             document.getElementById('theme').textContent = p.theme;
             
             const options = { weekday: 'long', day: 'numeric', month: 'long' };
-            const todayFormatted = new Date().toLocaleDateString('fr-FR', options);
-            const formattedDate = todayFormatted.charAt(0).toUpperCase() + todayFormatted.slice(1);
-            
-            document.getElementById('date').textContent = formattedDate;
-
-            // Update Export Elements
-            document.getElementById('exportDate').textContent = formattedDate;
-            document.getElementById('exportTheme').textContent = p.theme;
-            document.getElementById('exportProverb').textContent = "« " + p.text + " »";
-            document.getElementById('exportExp').textContent = p.exp;
-            document.getElementById('exportThought').textContent = p.thought;
-
-            updateBackgroundImage();
-        }
-
-        function updateBackgroundImage() {
-            currentBgUrl = getThematicImageUrl(currentProverb.tag, imageSeed);
-            const bgLayer = document.getElementById('bgLayer');
-            const exportCard = document.getElementById('exportCardHidden');
-
-            // Preload image to avoid flicker
-            const img = new Image();
-            img.crossOrigin = "anonymous";
-            img.onload = function() {
-                bgLayer.style.backgroundImage = `url('${currentBgUrl}')`;
-                exportCard.style.backgroundImage = `url('${currentBgUrl}')`;
-            };
-            img.src = currentBgUrl;
-        }
-
-        function changeBackgroundImage() {
-            imageSeed += 1;
-            updateBackgroundImage();
-            showToast("Nouvelle image de fond !");
+            document.getElementById('date').textContent = new Date().toLocaleDateString('fr-FR', options);
         }
 
         function getRandomProverb() {
             const randomIndex = Math.floor(Math.random() * proverbs.length);
             displayProverb(proverbs[randomIndex]);
-            showToast("Proverbe pioché !");
         }
 
         function speakProverb() {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
-                const textToSpeak = `${currentProverb.text}. Explication : ${currentProverb.exp}. Pensée positive : ${currentProverb.thought}`;
+                const textToSpeak = currentProverb.text + ". " + currentProverb.exp + " Pensée positive : " + currentProverb.thought;
                 const utterance = new SpeechSynthesisUtterance(textToSpeak);
                 utterance.lang = 'fr-FR';
-                utterance.rate = 0.95;
                 window.speechSynthesis.speak(utterance);
-                showToast("Lecture vocale démarrée...");
             } else {
-                showToast("Synthèse vocale indisponible.");
+                alert('La synthèse vocale n\'est pas supportée sur cet appareil.');
             }
         }
 
         function shareProverb() {
-            const textToShare = `« ${currentProverb.text} »\n\n💡 Explication : ${currentProverb.exp}\n🌱 Pensée positive : ${currentProverb.thought}`;
-            
+            const textToShare = "« " + currentProverb.text + " »\n\nExplication : " + currentProverb.exp + "\n\nPensée positive : " + currentProverb.thought;
             if (navigator.share) {
-                navigator.share({
-                    title: 'Le Proverbe du Jour',
-                    text: textToShare,
-                    url: window.location.href
-                }).catch(() => {});
+                navigator.share({ title: 'Proverbe du Jour', text: textToShare, url: window.location.href });
             } else {
-                const dummy = document.createElement("textarea");
-                document.body.appendChild(dummy);
-                dummy.value = textToShare;
-                dummy.select();
-                document.execCommand("copy");
-                document.body.removeChild(dummy);
-                showToast("Proverbe copié dans le presse-papier !");
+                navigator.clipboard.writeText(textToShare);
+                alert('Proverbe copié dans le presse-papier !');
             }
         }
 
-        function downloadHDImage() {
-            showToast("Génération de la carte HD...");
-            const exportCard = document.getElementById('exportCardHidden');
+        function downloadImage() {
+            const hiddenCard = document.getElementById('hiddenCard');
+            
+            // Prépa de la carte masquée
+            document.getElementById('hiddenTheme').textContent = currentProverb.theme;
+            document.getElementById('hiddenProverb').textContent = "« " + currentProverb.text + " »";
+            document.getElementById('hiddenExp').textContent = currentProverb.exp;
+            document.getElementById('hiddenThought').textContent = currentProverb.thought;
+            hiddenCard.style.backgroundImage = `url('${currentProverb.img}')`;
 
-            html2canvas(exportCard, {
+            // Rendu en image
+            html2canvas(hiddenCard, {
                 useCORS: true,
-                allowTaint: true,
-                scale: 1,
-                width: 1080,
-                height: 1920,
-                logging: false
+                scale: 2
             }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = `proverbe-${currentProverb.theme.toLowerCase()}-hd.png`;
+                link.download = `proverbe-${currentProverb.theme.toLowerCase()}.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
-                showToast("Carte HD téléchargée !");
-            }).catch(err => {
-                showToast("Erreur lors du téléchargement");
-                console.error(err);
             });
         }
 
-        // Search engine
         function searchProverb() {
-            const input = document.getElementById('searchInput').value.toLowerCase().trim();
+            const input = document.getElementById('searchInput').value.toLowerCase();
             const resultsContainer = document.getElementById('searchResults');
             resultsContainer.innerHTML = '';
 
-            if (input === '') {
+            if (input.trim() === '') {
                 resultsContainer.style.display = 'none';
                 return;
             }
@@ -731,37 +438,23 @@
             );
 
             if (filtered.length === 0) {
-                const emptyItem = document.createElement('div');
-                emptyItem.className = 'search-item';
-                emptyItem.style.color = 'var(--text-muted)';
-                emptyItem.textContent = 'Aucun proverbe trouvé.';
-                resultsContainer.appendChild(emptyItem);
-            } else {
-                filtered.slice(0, 6).forEach(p => {
-                    const item = document.createElement('div');
-                    item.className = 'search-item';
-                    item.innerHTML = `<span class="search-item-theme">[${p.theme}]</span> ${p.text}`;
-                    item.onclick = () => {
-                        displayProverb(p);
-                        resultsContainer.style.display = 'none';
-                        document.getElementById('searchInput').value = '';
-                        showToast("Proverbe affiché !");
-                    };
-                    resultsContainer.appendChild(item);
-                });
+                resultsContainer.style.display = 'none';
+                return;
             }
 
-            resultsContainer.style.display = 'block';
-        }
+            filtered.slice(0, 5).forEach(p => {
+                const item = document.createElement('div');
+                item.className = 'search-item';
+                item.innerHTML = `<strong>[${p.theme}]</strong> ${p.text}`;
+                item.onclick = () => {
+                    displayProverb(p);
+                    resultsContainer.style.display = 'none';
+                    document.getElementById('searchInput').value = '';
+                };
+                resultsContainer.appendChild(item);
+            });
 
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            const toastMsg = document.getElementById('toastMsg');
-            toastMsg.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            resultsContainer.style.display = 'block';
         }
 
         document.addEventListener('click', function(e) {
